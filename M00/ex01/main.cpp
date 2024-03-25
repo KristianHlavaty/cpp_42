@@ -1,8 +1,22 @@
 #include "PhoneBook.class.hpp"
-#include <iostream> // std::cout , std::cin , std::endl, std::getline, clear, ignore
+#include <iostream> // std::cout, std::cin, std::endl, std::getline, clear, ignore
 #include <limits> // std::numeric_limits, std::streamsize, max
 
 // std::cin used to read data from the standard input
+
+// in subject, there is that "A saved contact can’t have empty fields."
+// so I decided to Keep asking until a non-empty value is provided.
+void promtForInput(const std::string &fieldName, std::string &fieldValue)
+{
+	do
+	{
+		std::cout << "Enter " << fieldName << ": ";
+		std::getline(std::cin, fieldValue);
+	} 
+	while (fieldValue.empty());
+	
+}
+
 // create new Contact object and set its member variables
 // add the new Contact object to the PhoneBook
 void addNewContact(PhoneBook &phoneBook)
@@ -10,24 +24,19 @@ void addNewContact(PhoneBook &phoneBook)
 	Contact contact;
 	std::string input;
 
-	std::cout << "Enter first name: ";
-	std::getline(std::cin, input);
+	promtForInput("first name", input);
 	contact.setFirstName(input);
 
-	std::cout << "Enter last name: ";
-	std::getline(std::cin, input);
+	promtForInput("last name", input);
 	contact.setLastName(input);
 
-	std::cout << "Enter nickname: ";
-	std::getline(std::cin, input);
+	promtForInput("nickname", input);
 	contact.setNickname(input);
 
-	std::cout << "Enter phone number: ";
-	std::getline(std::cin, input);
+	promtForInput("phone number", input);
 	contact.setPhoneNumber(input);
 
-	std::cout << "Enter darkest secret: ";
-	std::getline(std::cin, input);
+	promtForInput("darkest secret", input);
 	contact.setDarkestSecret(input);
 
 	phoneBook.addContact(contact);
