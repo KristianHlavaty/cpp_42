@@ -7,7 +7,8 @@
 // thats why i use static_cast<char> instead of (char)
 // std::toupper takes int and returns int, so i use static_cast<char> to convert int to char
 
-// for performance issues i could use /n instead of std::endl, but this is new so i
+// for performance issues i could use /n instead of std::endl, but this is new so I
+// std:endl is not OS specific
 // wanted to use it just because of that
 
 int	main(int argc, char **argv)
