@@ -3,7 +3,8 @@
 
 #include <string>
 
-class Replace {
+class Replace
+{
 	private:
     	std::string _replaceOccurrences(const std::string& line, const std::string& s1, const std::string& s2) const;
 	public:

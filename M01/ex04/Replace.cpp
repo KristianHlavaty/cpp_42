@@ -6,7 +6,8 @@
 //in C++98, std::ifstream and std::ofstream constructors do not accept std::string objects directly. Instead, they require C-style strings (const char*).
 //thats why I need to use c_str() method to convert std::string to const char*.
 
-bool Replace::replaceInFile(const std::string& filename, const std::string& s1, const std::string& s2) const {
+bool Replace::replaceInFile(const std::string& filename, const std::string& s1, const std::string& s2) const
+{
 	std::ifstream infile(filename.c_str());
 	if(!infile.is_open())
 	{
