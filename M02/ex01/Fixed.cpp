@@ -50,6 +50,10 @@ Fixed::Fixed(const int intValue)
 	_fixedPointValue = intValue << _fractionalBits;
 }
 
+// _fractionalBits is 8, so (1 << 8) is equivalent to 2^8 = 256
+// Binary of 256: 100000000.
+// Right shift by 8 positions: 00000001.
+// Decimal result: 1.
 Fixed::Fixed(const float floatValue)
 {
 	std::cout << "Float constructor called" << std::endl;
