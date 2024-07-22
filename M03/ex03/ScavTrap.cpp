@@ -5,8 +5,7 @@ ScavTrap::ScavTrap(const std::string& name) : ClapTrap(name)
 	_hitPoints = 100;
 	_energyPoints = 50;
 	_attackDamage = 20;
-	std::cout << getClassName() << " " << _name << " has been created! (child constructor)" << std::endl;
-	printStatus();
+	std::cout << "ScavTrap (child constructor)" << std::endl;
 }
 
 ScavTrap::ScavTrap(const ScavTrap& other) : ClapTrap(other)
@@ -53,4 +52,10 @@ void ScavTrap::attack(const std::string& target)
 	_energyPoints--;
 	std::cout << getClassName() << " " << _name << " attacks " << target << ", causing " << _attackDamage << " points of damage!" << std::endl;
 	printStatus();
+}
+
+void ScavTrap::initialize()
+{
+    std::cout << getClassName() << " " << _name << " has been created!" << std::endl;
+    printStatus();
 }

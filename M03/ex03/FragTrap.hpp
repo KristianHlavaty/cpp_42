@@ -15,6 +15,7 @@ class FragTrap : virtual public ClapTrap
 
 		void highFivesGuys(void);
 		void attack(const std::string& target);
+		void initialize(); // now needed for diamond to not write wrong messages
 };
 
 #endif

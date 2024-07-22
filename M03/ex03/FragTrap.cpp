@@ -5,8 +5,7 @@ FragTrap::FragTrap(const std::string& name) : ClapTrap(name)
 	_hitPoints = 100;
 	_energyPoints = 100;
 	_attackDamage = 30;
-	std::cout << getClassName() << " " << _name << " has been created! (child constructor)" << std::endl;
-	printStatus();
+	std::cout << "FragTrap (child constructor)" << std::endl;
 }
 
 FragTrap::FragTrap(const FragTrap& other) : ClapTrap(other)
@@ -53,4 +52,10 @@ void FragTrap::attack(const std::string& target)
 	_energyPoints--;
 	std::cout << getClassName() << " " << _name << " attacks " << target << ", causing " << _attackDamage << " points of damage!" << std::endl;
 	printStatus();
+}
+
+void FragTrap::initialize()
+{
+    std::cout << getClassName() << " " << _name << " has been created!" << std::endl;
+    printStatus();
 }
