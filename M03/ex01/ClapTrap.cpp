@@ -8,9 +8,9 @@ void ClapTrap::printStatus() const
 ClapTrap::ClapTrap(const std::string& name) 
 	: _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)
 {
-	std::cout << getClassName() << " " << _name << " has been created! (constructor)" << std::endl;
-	printStatus();
+	std::cout << "ClapTraps constructor called" << std::endl;
 }
+
 
 ClapTrap::~ClapTrap()
 {
@@ -62,4 +62,10 @@ void ClapTrap::beRepaired(unsigned int amount)
 std::string ClapTrap::getClassName() const
 {
 	return "ClapTrap";
+}
+
+void ClapTrap::initialize()
+{
+    std::cout << getClassName() << " " << _name << " has been created!" << std::endl;
+    printStatus();
 }
