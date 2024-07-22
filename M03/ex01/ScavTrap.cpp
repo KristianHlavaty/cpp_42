@@ -23,3 +23,15 @@ std::string ScavTrap::getClassName() const
 {
 	return "ScavTrap";
 }
+
+void ScavTrap::attack(const std::string& target)
+{
+	if(_hitPoints == 0 || _energyPoints == 0)
+	{
+		std::cout << getClassName() << " " << _name << " has no hit points or energy points left to attack!" << std::endl;
+		return;
+	}
+	_energyPoints--;
+	std::cout << getClassName() << " " << _name << " attacks " << target << ", causing " << _attackDamage << " points of damage!" << std::endl;
+	printStatus();
+}

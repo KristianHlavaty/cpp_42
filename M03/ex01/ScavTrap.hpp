@@ -12,6 +12,7 @@ class ScavTrap : public ClapTrap
 		std::string getClassName() const; // need to return "ScavTrap"
 
 		void guardGate();
+		void attack(const std::string& target);
 };
 
 #endif
