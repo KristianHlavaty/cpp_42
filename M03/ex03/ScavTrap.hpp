@@ -3,7 +3,8 @@
 
 #include "ClapTrap.hpp"
 
-class ScavTrap : public ClapTrap
+// needed to add virtual because of the inheritance
+class ScavTrap : virtual public ClapTrap
 {
 	public:
 		ScavTrap(const std::string& name);

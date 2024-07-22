@@ -21,6 +21,9 @@ class ClapTrap
 
 		virtual std::string getClassName() const; // virtual because i need class name
 
+		ClapTrap(const ClapTrap& other); // Copy constructor
+    	ClapTrap& operator=(const ClapTrap& other); // Copy assignment operator
+		
 		void attack(const std::string& target);
 		void takeDamage(unsigned int amount);
 		void beRepaired(unsigned int amount);

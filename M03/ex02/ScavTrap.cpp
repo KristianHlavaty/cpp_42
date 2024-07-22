@@ -9,6 +9,25 @@ ScavTrap::ScavTrap(const std::string& name) : ClapTrap(name)
 	printStatus();
 }
 
+ScavTrap::ScavTrap(const ScavTrap& other) : ClapTrap(other)
+{
+    *this = other;
+    std::cout << "ScavTrap " << _name << " has been copied! (copy constructor)" << std::endl;
+}
+
+ScavTrap& ScavTrap::operator=(const ScavTrap& other)
+{
+    if (this != &other)
+	{
+        ClapTrap::operator=(other);
+        _hitPoints = other._hitPoints;
+        _energyPoints = other._energyPoints;
+        _attackDamage = other._attackDamage;
+    }
+    std::cout << "ScavTrap " << _name << " has been assigned! (copy assignment operator)" << std::endl;
+    return *this;
+}
+
 ScavTrap::~ScavTrap()
 {
 	std::cout << getClassName() << " " << _name << " has been destroyed! (destructor)" << std::endl;

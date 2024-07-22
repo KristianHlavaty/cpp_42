@@ -19,7 +19,7 @@ FragTrap& FragTrap::operator=(const FragTrap& other)
 {
     if (this != &other)
 	{
-        ClapTrap::operator=(other);
+        ClapTrap::operator=(other); // Call base class assignment operator
         _hitPoints = other._hitPoints;
         _energyPoints = other._energyPoints;
         _attackDamage = other._attackDamage;

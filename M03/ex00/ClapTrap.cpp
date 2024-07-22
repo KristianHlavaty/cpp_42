@@ -12,6 +12,25 @@ ClapTrap::ClapTrap(const std::string& name)
 	printStatus();
 }
 
+ClapTrap::ClapTrap(const ClapTrap& other) 
+    : _name(other._name), _hitPoints(other._hitPoints), _energyPoints(other._energyPoints), _attackDamage(other._attackDamage)
+{
+    std::cout << "ClapTrap " << _name << " has been copied! (copy constructor)" << std::endl;
+}
+
+ClapTrap& ClapTrap::operator=(const ClapTrap& other)
+{
+    if (this != &other)
+	{
+        _name = other._name;
+        _hitPoints = other._hitPoints;
+        _energyPoints = other._energyPoints;
+        _attackDamage = other._attackDamage;
+    }
+    std::cout << "ClapTrap " << _name << " has been assigned! (copy assignment operator)" << std::endl;
+    return *this;
+}
+
 ClapTrap::~ClapTrap()
 {
 	std::cout << "ClapTrap " << _name << " has been destroyed! (destructor)" << std::endl;
