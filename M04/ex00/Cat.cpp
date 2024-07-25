@@ -8,18 +8,18 @@ Cat::Cat() : Animal()
 
 Cat::Cat(const Cat& other) : Animal(other)
 {
-	_type = other._type;
-	std::cout << _type << " has been copied! (copy constructor)" << std::endl;
+    *this = other;
+    std::cout << "Cat copy constructor called" << std::endl;
 }
 
 Cat& Cat::operator=(const Cat& other)
 {
-	if(this != &other)
+    if (this != &other)
 	{
-		_type = other._type;
-	}
-	std::cout << _type << "has been assigned! (copy assignment operator)" << std::endl;
-	return *this;
+        Animal::operator=(other);
+    }
+    std::cout << "Cat copy assignment operator called" << std::endl;
+    return *this;
 }
 
 Cat::~Cat()
