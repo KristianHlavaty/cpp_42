@@ -34,5 +34,10 @@ int main()
     delete metaWrong;
     delete iWrong;
 
+	std::cout << std::endl << "Directly accessing WrongCat sound:" << std::endl;
+
+    WrongCat wrongCat;
+    wrongCat.makeSound(); // will output the WrongCat sound!
+
 	return 0;
 }

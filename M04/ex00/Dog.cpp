@@ -2,7 +2,7 @@
 
 Dog::Dog() : Animal()
 {
-	_type = "Dog type";
+	_type = "Dog";
 	std::cout << "Dog constructor called" << std::endl;
 }
 

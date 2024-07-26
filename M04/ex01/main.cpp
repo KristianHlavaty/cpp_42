@@ -46,3 +46,11 @@ int main()
 
     return 0;
 }
+
+
+// If the destructor in the base class is not virtual,
+// deleting a derived class object through a base class pointer
+// will result in undefined behavior. Typically, the base class 
+// destructor will be called without calling the derived class destructor,
+// leading to resource leaks and other issues.
+
