@@ -89,6 +89,7 @@ const char *Bureaucrat::GradeTooLowException::what() const throw()
 }
 
 // overload << operator
+// for custom output format: "name, bureaucrat grade grade"
 std::ostream &operator<<(std::ostream &out, const Bureaucrat &b)
 {
 	out << b.getName() << ", bureaucrat grade " << b.getGrade();
