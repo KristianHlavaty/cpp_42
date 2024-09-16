@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include "Form.hpp"
 
 class Bureaucrat
 {
@@ -21,7 +22,8 @@ class Bureaucrat
 
 		void incrementGrade();
 		void decrementGrade();
-
+		void signForm(Form &form);
+		
 		// Exceptions
 		class GradeTooHighException : public std::exception
 		{
@@ -37,7 +39,6 @@ class Bureaucrat
 };
 
 // Overload the insertion (<<) operator
-// for custom output format: "name, bureaucrat grade grade"
 std::ostream &operator<<(std::ostream &out, const Bureaucrat &b);
 
 #endif
