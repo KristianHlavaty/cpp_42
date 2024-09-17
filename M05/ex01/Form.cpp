@@ -10,7 +10,14 @@ Form::Form() : _name("Default Form"), _isSigned(false), _gradeToSign(1), _gradeT
 Form::Form(const std::string &name, int gradeToSign, int gradeToExecute) : _name(name), _gradeToSign(gradeToSign), _gradeToExecute(gradeToExecute)
 {
 	std::cout << "Form constructor with parameters called" << std::endl;
-	// to think: should i throw exception here if the gradeToSign is too high/low?
+	if (gradeToSign < 1 || gradeToExecute < 1)
+	{
+		throw GradeTooHighException();
+	}
+	if (gradeToSign > 150 || gradeToSign > 150)
+	{
+		throw GradeTooLowException();
+	}
 }
 
 // Copy constructor
@@ -58,7 +65,14 @@ int Form::getGradeToExecute() const
 
 void Form::beSigned(const Bureaucrat &b)
 {
-	// todo logic 
+	// "form status to signed if the bureaucrat’s
+	// grade is high enough (higher or egal to the required one)"
+	// 150 is lowest and 1 is highest possible grade
+	if (b.getGrade() > _gradeToSign)
+	{
+        throw GradeTooLowException();
+    }
+    _isSigned = true;
 }
 
 // Exception

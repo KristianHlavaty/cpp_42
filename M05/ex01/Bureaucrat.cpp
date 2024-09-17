@@ -26,7 +26,7 @@ Bureaucrat::Bureaucrat(const Bureaucrat &other) : _name(other._name), _grade(oth
 	std::cout << "Bureaucrat copy constructor called" << std::endl;
 }
 
-// copy assignment operator
+// Copy assignment operator
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
 {
 	std::cout<< "Bureaucrat copy assignment operator called" << std::endl;
@@ -88,6 +88,19 @@ const char *Bureaucrat::GradeTooLowException::what() const throw()
 	return "Grade is too low!";
 }
 
+// beSigned
+void Bureaucrat::signForm(Form &form)
+{
+	try
+	{
+		form.beSigned(*this);
+		std::cout << _name << " signed " << form.getName() << std::endl;
+	}
+	catch(std::exception &e)
+	{
+		std::cout << _name << " couldn't sign " << form.getName() << std::endl;
+	}
+}
 // overload << operator
 // for custom output format: "name, bureaucrat grade grade"
 std::ostream &operator<<(std::ostream &out, const Bureaucrat &b)

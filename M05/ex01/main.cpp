@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 int main()
 {
@@ -7,32 +8,23 @@ int main()
 
 	try
 	{
-		Bureaucrat b1("Testunson", 2);
-		std::cout << b1 << std::endl;
+		Bureaucrat emil("Emil", 50);
+		Form taxForm("Tax Form", 75, 45);
 
-		b1.incrementGrade();
-		std::cout << b1 << std::endl;
-		
-		b1.incrementGrade(); // should throw exception
+		std::cout << taxForm << std::endl;
+
+		// try to sign the form
+		emil.signForm(taxForm);
+
+		Bureaucrat blabla("Blabla", 40);
+		blabla.signForm(taxForm);
+
+		std::cout << taxForm << std::endl;
+
 	}
 	catch (std::exception &e)
 	{
-		std::cerr << "Exception caught " << e.what() << std::endl;
-	}
-
-	try
-	{
-		Bureaucrat b2("Evil twin of Testunson", 149);
-		std::cout << b2 << std::endl;
-
-		b2.decrementGrade();
-		std::cout << b2 << std::endl;
-
-		b2.decrementGrade(); // should throw exception
-	}
-	catch (std::exception &e)
-	{
-		std::cerr << "Exception caught " << e.what() << std::endl;
+		std::cerr << "Exception: " << e.what() << std::endl;
 	}
 	return 0;
 }
