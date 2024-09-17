@@ -23,9 +23,9 @@ class Form
 		~Form(); // destructor
 
 		std::string getName() const;
-		bool getisSigned() const;
+		bool getIsSigned() const;
 		int getGradeToSign() const;
-		int getGradetoExecute() const;
+		int getGradeToExecute() const;
 
 		void beSigned(const Bureaucrat &b);
 
