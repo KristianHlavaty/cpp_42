@@ -14,7 +14,7 @@ Form::Form(const std::string &name, int gradeToSign, int gradeToExecute) : _name
 	{
 		throw GradeTooHighException();
 	}
-	if (gradeToSign > 150 || gradeToSign > 150)
+	if (gradeToSign > 150 || gradeToExecute > 150)
 	{
 		throw GradeTooLowException();
 	}

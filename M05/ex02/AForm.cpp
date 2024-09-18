@@ -14,7 +14,7 @@ AForm::AForm(const std::string &name, int gradeToSign, int gradeToExecute) : _na
 	{
 		throw GradeTooHighException();
 	}
-	if (gradeToSign > 150 || gradeToSign > 150)
+	if (gradeToSign > 150 || gradeToExecute > 150)
 	{
 		throw GradeTooLowException();
 	}
@@ -75,6 +75,18 @@ void AForm::beSigned(const Bureaucrat &b)
     _isSigned = true;
 }
 
+void AForm::beExecutable(const Bureaucrat &b, const AForm &f)
+{
+	if(b.getGrade() > _gradeToSign)
+	{
+		throw GradeTooLowToSignException();
+	}
+	if(f.getGradeToExecute() > _gradeToExecute)
+	{
+		throw GradeTooLowToExecuteException();
+	}
+}
+
 // Exception
 const char *AForm::GradeTooHighException::what() const throw()
 {
@@ -84,6 +96,16 @@ const char *AForm::GradeTooHighException::what() const throw()
 const char *AForm::GradeTooLowException::what() const throw()
 {
 	return "Grade is too low!";
+}
+
+const char *AForm::GradeTooLowToSignException::what() const throw()
+{
+	return "Grade is too low to sign the form!";
+}
+
+const char *AForm::GradeTooLowToExecuteException::what() const throw()
+{
+	return "Grade is too low to execute the form!";
 }
 
 // overload << operator

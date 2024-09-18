@@ -96,7 +96,7 @@ void Bureaucrat::signForm(AForm &aForm)
 		aForm.beSigned(*this);
 		std::cout << _name << " signed " << aForm.getName() << std::endl;
 	}
-	catch(std::exception &e)
+	catch(const std::exception &e)
 	{
 		std::cout << _name << " couldn't sign " << aForm.getName() << " because his grade: " << _grade << " is too low" << std::endl;
 	}
@@ -110,9 +110,20 @@ void Bureaucrat::executeForm(const AForm &aForm)
 		aForm.execute(*this);
 		std::cout << _name << " executed " << aForm.getName() << std::endl;
 	}
-	catch(std::exception& e)
+	catch (const AForm::GradeTooLowToExecuteException &e)
 	{
 		std::cout << _name << " couldn't execute " << aForm.getName() << std::endl;
+		std::cout << "reason: " << e.what() << std::endl;
+	}
+	catch (const AForm::GradeTooLowToSignException &e)
+	{
+		std::cout << _name << " couldn't execute " << aForm.getName() << std::endl;
+		std::cout << "reason: " << e.what() << std::endl;
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << _name << " couldn't execute " << aForm.getName() << std::endl;
+		std::cout << "reason: form is not signed" << std::endl;
 	}
 }
 // overload << operator

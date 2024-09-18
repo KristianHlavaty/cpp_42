@@ -30,6 +30,7 @@ class AForm
 		int getGradeToExecute() const;
 
 		void beSigned(const Bureaucrat &b);
+		void beExecutable(const Bureaucrat &b, const AForm &f);
 		// abstract class cant be instantiated directly
 		// achieved by setting this to 0
 		virtual void execute(const Bureaucrat &executor) const = 0;
@@ -41,6 +42,18 @@ class AForm
 		};
 		
 		class GradeTooLowException : public std::exception
+		{
+			public:
+				const char *what() const throw();
+		};
+
+		class GradeTooLowToSignException : public std::exception
+		{
+			public:
+				const char *what() const throw();
+		};
+		
+		class GradeTooLowToExecuteException : public std::exception
 		{
 			public:
 				const char *what() const throw();
