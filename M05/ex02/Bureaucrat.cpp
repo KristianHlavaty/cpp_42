@@ -98,7 +98,21 @@ void Bureaucrat::signForm(AForm &aForm)
 	}
 	catch(std::exception &e)
 	{
-		std::cout << _name << " couldn't sign " << aForm.getName() << std::endl;
+		std::cout << _name << " couldn't sign " << aForm.getName() << " because his grade: " << _grade << " is too low" << std::endl;
+	}
+}
+
+// Execute
+void Bureaucrat::executeForm(const AForm &aForm)
+{
+	try
+	{
+		aForm.execute(*this);
+		std::cout << _name << " executed " << aForm.getName() << std::endl;
+	}
+	catch(std::exception& e)
+	{
+		std::cout << _name << " couldn't execute " << aForm.getName() << std::endl;
 	}
 }
 // overload << operator

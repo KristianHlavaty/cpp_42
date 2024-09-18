@@ -22,7 +22,7 @@ class AForm
 		AForm(const std::string &name, int gradeToSign, int gradeToExecute); // constructor
 		AForm(const AForm &other); // copy constructor
 		AForm &operator=(const AForm &other); // copy assignment operator
-		~AForm(); // destructor
+		virtual ~AForm(); // destructor - made it virtual since this has to be abstract class
 
 		std::string getName() const;
 		bool getIsSigned() const;
@@ -30,7 +30,9 @@ class AForm
 		int getGradeToExecute() const;
 
 		void beSigned(const Bureaucrat &b);
-
+		// abstract class cant be instantiated directly
+		// achieved by setting this to 0
+		virtual void execute(const Bureaucrat &executor) const = 0;
 		// Exceptions
 		class GradeTooHighException : public std::exception
 		{

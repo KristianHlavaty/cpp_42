@@ -9,26 +9,26 @@ int main()
 	try
 	{
 		Bureaucrat emil("Emil", 50);
+		// FOLLOWING TEST SHOULD NOT COMPILE
 		// name, grade to sign, grade to execute
-		// right now not executing, will probably have to implement it on the next one
-		AForm taxForm("Tax Form", 46, 20);
+		// AForm taxForm("Tax Form", 46, 20);
 
-		std::cout << taxForm << std::endl;
+		// std::cout << taxForm << std::endl;
 
 		// try to sign the form
-		emil.signForm(taxForm);
+		// emil.signForm(taxForm);
 
-		std::cout << taxForm << std::endl;
+		// std::cout << taxForm << std::endl;
 
-		Bureaucrat blabla("Blabla", 40);
-		blabla.signForm(taxForm);
+		// Bureaucrat blabla("Blabla", 40);
+		// blabla.signForm(taxForm);
 
-		std::cout << taxForm << std::endl;
+		// std::cout << taxForm << std::endl;
 
-		Bureaucrat blablanson("Blablanson", 40);
-		blablanson.signForm(taxForm);
+		// Bureaucrat blablanson("Blablanson", 40);
+		// blablanson.signForm(taxForm);
 
-		std::cout << taxForm << std::endl;
+		// std::cout << taxForm << std::endl;
 
 	}
 	catch (std::exception &e)

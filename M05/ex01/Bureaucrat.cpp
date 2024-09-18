@@ -98,7 +98,7 @@ void Bureaucrat::signForm(Form &form)
 	}
 	catch(std::exception &e)
 	{
-		std::cout << _name << " couldn't sign " << form.getName() << std::endl;
+		std::cout << _name << " couldn't sign " << form.getName() << " because his grade: " << _grade << " is too low" << std::endl;
 	}
 }
 // overload << operator
