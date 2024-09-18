@@ -3,13 +3,13 @@
 // Default constructor
 Bureaucrat::Bureaucrat() : _name("Default Bureaucrat"), _grade(150)
 {
-	std::cout << "Bureaucrat default constructor called" << std::endl; // just for testing everywhere
+	// std::cout << "Bureaucrat default constructor called" << std::endl; // just for testing everywhere
 }
 
 // Constructor with parameters
 Bureaucrat::Bureaucrat(const std::string &name, int grade) : _name(name), _grade(grade)
 {
-	std::cout << "Bureaucrat constructor with parameters called" << std::endl;
+	// std::cout << "Bureaucrat constructor with parameters called" << std::endl;
 	if (grade < 1)
 	{
 		throw GradeTooHighException();
@@ -23,13 +23,13 @@ Bureaucrat::Bureaucrat(const std::string &name, int grade) : _name(name), _grade
 // Copy constructor
 Bureaucrat::Bureaucrat(const Bureaucrat &other) : _name(other._name), _grade(other._grade)
 {
-	std::cout << "Bureaucrat copy constructor constructor called" << std::endl;
+	// std::cout << "Bureaucrat copy constructor constructor called" << std::endl;
 }
 
 // copy assignment operator
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
 {
-	std::cout<< "Bureaucrat copy assignment operator called" << std::endl;
+	// std::cout<< "Bureaucrat copy assignment operator called" << std::endl;
 	if (this != &other)
 	{
 		// _name is const so no copying
@@ -41,7 +41,7 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
 // Destructor
 Bureaucrat::~Bureaucrat()
 {
-	std::cout<< "Bureaucrat dectructor called" << std::endl;
+	// std::cout<< "Bureaucrat dectructor called" << std::endl;
 }
 
 // Getters

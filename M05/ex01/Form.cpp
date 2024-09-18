@@ -3,13 +3,13 @@
 // Default constructor
 Form::Form() : _name("Default Form"), _isSigned(false), _gradeToSign(1), _gradeToExecute(1)
 {
-	std::cout << "Form default constructor called" << std::endl;
+	// std::cout << "Form default constructor called" << std::endl;
 }
 
 // Constructor with parameters
 Form::Form(const std::string &name, int gradeToSign, int gradeToExecute) : _name(name), _gradeToSign(gradeToSign), _gradeToExecute(gradeToExecute)
 {
-	std::cout << "Form constructor with parameters called" << std::endl;
+	// std::cout << "Form constructor with parameters called" << std::endl;
 	if (gradeToSign < 1 || gradeToExecute < 1)
 	{
 		throw GradeTooHighException();
@@ -23,12 +23,12 @@ Form::Form(const std::string &name, int gradeToSign, int gradeToExecute) : _name
 // Copy constructor
 Form::Form(const Form &other) : _name(other._name), _gradeToSign(other._gradeToSign), _gradeToExecute(other._gradeToExecute)
 {
-	std::cout << "Form copy constructor called" << std::endl;
+	// std::cout << "Form copy constructor called" << std::endl;
 }
 // Copy assignment operator
 Form &Form::operator=(const Form &other)
 {
-	std::cout << "Form copy assignment operator called" << std::endl;
+	// std::cout << "Form copy assignment operator called" << std::endl;
 	if (this != &other)
 	{
 		_isSigned = other._isSigned;
@@ -39,7 +39,7 @@ Form &Form::operator=(const Form &other)
 // Destructor
 Form::~Form()
 {
-	std::cout << "Form destructor called" << std::endl;
+	// std::cout << "Form destructor called" << std::endl;
 }
 
 // Getters

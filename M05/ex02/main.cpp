@@ -1,5 +1,5 @@
 #include "Bureaucrat.hpp"
-#include "Form.hpp"
+#include "AForm.hpp"
 
 int main()
 {
@@ -11,7 +11,7 @@ int main()
 		Bureaucrat emil("Emil", 50);
 		// name, grade to sign, grade to execute
 		// right now not executing, will probably have to implement it on the next one
-		Form taxForm("Tax Form", 46, 20);
+		AForm taxForm("Tax Form", 46, 20);
 
 		std::cout << taxForm << std::endl;
 

@@ -1,27 +1,28 @@
-#ifndef FORM_HPP
-#define FORM_HPP
+#ifndef AFORM_HPP
+#define AFORM_HPP
 
 #include <iostream>
 #include "Bureaucrat.hpp"
 
+
 class Bureaucrat;
-class Form
+class AForm
 {
 	private:
 		const std::string _name;
 		bool _isSigned;
 		const int _gradeToSign;
 		const int _gradeToExecute;
-		Form(); // default constructor I put it there because Igor told me to xD
+		AForm(); // default constructor I put it there because Igor told me to xD
 				// supposedly it should be for the compiler,
 				// so we can't access it directly, but the compiler doesnt
 				// create its own
 
 	public:
-		Form(const std::string &name, int gradeToSign, int gradeToExecute); // constructor
-		Form(const Form &other); // copy constructor
-		Form &operator=(const Form &other); // copy assignment operator
-		~Form(); // destructor
+		AForm(const std::string &name, int gradeToSign, int gradeToExecute); // constructor
+		AForm(const AForm &other); // copy constructor
+		AForm &operator=(const AForm &other); // copy assignment operator
+		~AForm(); // destructor
 
 		std::string getName() const;
 		bool getIsSigned() const;
@@ -46,6 +47,6 @@ class Form
 
 // Overload the insertion (<<) operator
 // for custom output format
-std::ostream &operator<<(std::ostream &out, const Form &f);
+std::ostream &operator<<(std::ostream &out, const AForm &f);
 
 #endif
