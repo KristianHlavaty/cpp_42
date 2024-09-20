@@ -1,6 +1,7 @@
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
 #include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
 
 int main()
 {
@@ -11,6 +12,7 @@ int main()
 	Bureaucrat lowRank("LowRank", 150);
 
 	ShrubberyCreationForm shrubberyForm("home");
+	RobotomyRequestForm robotomyRequestForm("home?");
 
 	// the whole signForm and executeForm inside is in try catch, so it is redundant to 
 	// do it here, just if anybody is wondering
@@ -18,6 +20,14 @@ int main()
 	highRank.signForm(shrubberyForm); // should succeed
 	lowRank.executeForm(shrubberyForm); // should fail
 	highRank.executeForm(shrubberyForm); // should succeed
+
+	std::cout << "\n" << std::endl;
+	std::cout << "\n" << std::endl;
+	
+	lowRank.signForm(robotomyRequestForm); // should fail
+	highRank.signForm(robotomyRequestForm); // should succeed
+	lowRank.executeForm(robotomyRequestForm); // should fail
+	highRank.executeForm(robotomyRequestForm); // should succeed
 	return 0;
 }
 

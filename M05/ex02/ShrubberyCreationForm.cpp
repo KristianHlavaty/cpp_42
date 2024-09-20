@@ -2,6 +2,10 @@
 #include <fstream>
 #include <iostream>
 
+// ShrubberyCreationForm: Required grades: sign 145, exec 137
+// Create a file <target>_shrubbery in the working directory, and writes ASCII trees
+// inside it.
+
 ShrubberyCreationForm::ShrubberyCreationForm() : AForm("Shrubbery Creation Form", 147, 137), _target("Default Target")
 {
 }
