@@ -11,76 +11,13 @@ int main()
 	Bureaucrat lowRank("LowRank", 150);
 
 	ShrubberyCreationForm shrubberyForm("home");
-	try
-	{
-		Bureaucrat emil("Emil", 50);
-		// FOLLOWING TEST SHOULD NOT COMPILE
-		// name, grade to sign, grade to execute
-		// AForm taxForm("Tax Form", 46, 20);
-
-		// std::cout << taxForm << std::endl;
-
-		// try to sign the form
-		// emil.signForm(taxForm);
-
-		// std::cout << taxForm << std::endl;
-
-		// Bureaucrat blabla("Blabla", 40);
-		// blabla.signForm(taxForm);
-
-		// std::cout << taxForm << std::endl;
-
-		// Bureaucrat blablanson("Blablanson", 40);
-		// blablanson.signForm(taxForm);
-
-		// std::cout << taxForm << std::endl;
-
-	}
-	catch (std::exception &e)
-	{
-		std::cerr << "Exception: " << e.what() << std::endl;
-	}
-	// should fail
-    try
-    {
-        lowRank.signForm(shrubberyForm);
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Exception: " << e.what() << std::endl;
-    }
-
-    // should succeed
-    try
-    {
-        highRank.signForm(shrubberyForm);
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Exception: " << e.what() << std::endl;
-    }
-
-    std::cout << shrubberyForm << std::endl;
-
-    // should fail
-    try
-    {
-        lowRank.executeForm(shrubberyForm);
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Exception: " << e.what() << std::endl;
-    }
-
-    // should succeed
-    try
-    {
-        highRank.executeForm(shrubberyForm);
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << "Exception: " << e.what() << std::endl;
-    }
-
+	
+	lowRank.signForm(shrubberyForm); // should fail
+	highRank.signForm(shrubberyForm); // should succeed
+	lowRank.executeForm(shrubberyForm); // should fail
+	highRank.executeForm(shrubberyForm); // should succeed
 	return 0;
 }
+
+// test for the Shrubbery for lazy people
+// make && ./Bureaucrat && cat home_shrubbery && rm home_shrubbery && make fclean

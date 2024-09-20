@@ -22,14 +22,15 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 		std::cerr << "Error: Could not create file " << _target + "_shrubbery" << std::endl;
 		return;
 	}
-	ofs << "       _-_\n"
-		"    /~~   ~~\\\n"
-		" /~~         ~~\\\n"
-		"{               }\n"
-		" \\  _-     -_  /\n"
-		"   ~  \\ //  ~\n"
-		"_- -   | | _- _\n"
-		"  _ -  | |   -_\n"
-		"      // \\\n";
+ofs << "                            \n"
+		"       _-_               _-_\n"
+        "    /~~   ~~\\         /~~   ~~\\\n"
+        " /~~         ~~\\    /~~       ~~\\\n"
+        "{               }  {            }\n"
+        " \\  _-     -_  /    \\ _-     -_ /\n"
+        "   ~  \\\\ //  ~     ~    \\\\ //  ~\n"
+        "_- -   | | _- _  _- -    | | _- _\n"
+        "  _ -  | |   -_    _ -   | |   -_\n"
+        "      // \\\\             // \\\\\n";
 	ofs.close();
 }

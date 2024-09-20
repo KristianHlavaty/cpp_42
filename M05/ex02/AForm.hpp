@@ -35,6 +35,8 @@ class AForm
 		// achieved by setting this to 0
 		virtual void execute(const Bureaucrat &executor) const = 0;
 		// Exceptions
+		// I am inheriting form the std::exception which has already virtual what() method
+		// so it would be redundant to use it here
 		class GradeTooHighException : public std::exception
 		{
 			public:

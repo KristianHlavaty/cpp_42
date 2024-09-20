@@ -26,6 +26,8 @@ class Bureaucrat
 		void signForm(Form &form);
 		
 		// Exceptions
+		// I am inheriting form the std::exception which has already virtual what() method
+		// so it would be redundant to use it here
 		class GradeTooHighException : public std::exception
 		{
 			public:
