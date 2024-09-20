@@ -30,7 +30,7 @@ class AForm
 		int getGradeToExecute() const;
 
 		void beSigned(const Bureaucrat &b);
-		void beExecutable(const Bureaucrat &b, const AForm &f);
+		void beExecutable(const Bureaucrat &b, const AForm &f) const;
 		// abstract class cant be instantiated directly
 		// achieved by setting this to 0
 		virtual void execute(const Bureaucrat &executor) const = 0;

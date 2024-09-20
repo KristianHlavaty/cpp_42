@@ -1,0 +1,35 @@
+#include "ShrubberyCreationForm.hpp"
+#include <fstream>
+#include <iostream>
+
+ShrubberyCreationForm::ShrubberyCreationForm(const std::string &target) : AForm("Shrubbery Creation", 145, 137), _target(target)
+{
+}
+ShrubberyCreationForm::~ShrubberyCreationForm()
+{
+}
+
+void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
+{
+	// "You have to check that the form is signed and that the grade of the bureaucrat
+	// attempting to execute the form is high enough" - from subject
+	beExecutable(executor, *this);
+	// does not have a constructor that takes a std::string directly
+	// fixed by using .c_str
+	std::ofstream ofs((_target + "_shrubbery").c_str());
+	if(!ofs)
+	{
+		std::cerr << "Error: Could not create file " << _target + "_shrubbery" << std::endl;
+		return;
+	}
+	ofs << "       _-_\n"
+		"    /~~   ~~\\\n"
+		" /~~         ~~\\\n"
+		"{               }\n"
+		" \\  _-     -_  /\n"
+		"   ~  \\ //  ~\n"
+		"_- -   | | _- _\n"
+		"  _ -  | |   -_\n"
+		"      // \\\n";
+	ofs.close();
+}
