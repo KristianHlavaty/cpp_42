@@ -11,7 +11,9 @@ int main()
 	Bureaucrat lowRank("LowRank", 150);
 
 	ShrubberyCreationForm shrubberyForm("home");
-	
+
+	// the whole signForm and executeForm inside is in try catch, so it is redundant to 
+	// do it here, just if anybody is wondering
 	lowRank.signForm(shrubberyForm); // should fail
 	highRank.signForm(shrubberyForm); // should succeed
 	lowRank.executeForm(shrubberyForm); // should fail
