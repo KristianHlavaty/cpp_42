@@ -12,7 +12,7 @@ int main()
 	Bureaucrat lowRank("LowRank", 150);
 
 	ShrubberyCreationForm shrubberyForm("home");
-	RobotomyRequestForm robotomyRequestForm("home?");
+	RobotomyRequestForm robotomyRequestForm("Pepa");
 
 	// the whole signForm and executeForm inside is in try catch, so it is redundant to 
 	// do it here, just if anybody is wondering
@@ -27,7 +27,7 @@ int main()
 	lowRank.signForm(robotomyRequestForm); // should fail
 	highRank.signForm(robotomyRequestForm); // should succeed
 	lowRank.executeForm(robotomyRequestForm); // should fail
-	highRank.executeForm(robotomyRequestForm); // should succeed
+	highRank.executeForm(robotomyRequestForm); // should succeed 50% of the time
 	return 0;
 }
 

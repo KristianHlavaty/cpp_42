@@ -1,4 +1,7 @@
 #include "RobotomyRequestForm.hpp"
+#include <cstdlib> // for rand()
+#include <iostream>
+#include <time.h> // srand() need for the rand to be actually random
 
 // RobotomyRequestForm: Required grades: sign 72, exec 45
 // Makes some drilling noises. Then, informs that <target> has been robotomized
@@ -33,7 +36,17 @@ RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &o
 void RobotomyRequestForm::execute(Bureaucrat const &executor) const
 {
 	beExecutable(executor, *this);
-	std::cout << "test" << std::endl;
-
-	// todo logic
+	std::cout << "some drilling noises" << std::endl;
+	srand(time(0));
+	int randomNumber = rand();
+	if (randomNumber % 2 == 0)
+	{
+		std::cout << _target << "has been robotomized" << std::endl;
+	}
+	else
+	{
+		std::cerr << "Robotomy has failed" << std::endl;
+		return;
+	}
+	
 }
