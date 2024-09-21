@@ -6,6 +6,10 @@
 
 class Intern
 {	
+	private:
+		static AForm* createShrubberyCreationForm(const std::string &target);
+		static AForm* createRobotomyRequestForm(const std::string &target);
+		static AForm* createPresidentialPardonForm(const std::string &target);
 	public:
 		Intern(); // constructor - no need for the default, since
 				  // 			   it is the same
