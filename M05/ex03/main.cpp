@@ -54,6 +54,9 @@ int main()
 
 	// initial test, change later
 	randomIntern.makeForm("unknown form", "Unknown");
+	Intern someRandomIntern;
+	AForm* rrf;
+	rrf = someRandomIntern.makeForm("robotomy request", "Bender");
 
 	return 0;
 }
