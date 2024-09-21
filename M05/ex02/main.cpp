@@ -38,6 +38,7 @@ int main()
 	std::cout << "\n" << std::endl;
 	std::cout << "PRESIDENTIAL SECTION\n" << std::endl;
 
+	highRank.executeForm(presidentialPardonForm); // should throw not signed form error
 	lowRank.signForm(presidentialPardonForm); // should fail
 	highRank.signForm(presidentialPardonForm); // should succeed
 	lowRank.executeForm(presidentialPardonForm); // should fail

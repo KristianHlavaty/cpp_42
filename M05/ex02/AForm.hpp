@@ -60,6 +60,11 @@ class AForm
 			public:
 				const char *what() const throw();
 		};
+		class FormIsNotSignedException : public std::exception
+		{
+			public:
+				const char *what() const throw();
+		};
 };
 
 // Overload the insertion (<<) operator

@@ -77,11 +77,9 @@ void AForm::beSigned(const Bureaucrat &b)
 
 void AForm::beExecutable(const Bureaucrat &b, const AForm &f) const
 {
-	// remember to check in main
 	if(!f.getIsSigned())
 	{
-		// change exception for not signed
-		throw GradeTooLowToSignException();
+		throw FormIsNotSignedException();
 	}
 	if(b.getGrade() > f.getGradeToExecute())
 	{
@@ -108,6 +106,11 @@ const char *AForm::GradeTooLowToSignException::what() const throw()
 const char *AForm::GradeTooLowToExecuteException::what() const throw()
 {
 	return "Grade is too low to execute the form!";
+}
+
+const char *AForm::FormIsNotSignedException::what() const throw()
+{
+	return "Form is not signed!";
 }
 
 // overload << operator
