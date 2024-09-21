@@ -3,6 +3,7 @@
 #include "ShrubberyCreationForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "PresidentialPardonForm.hpp"
+#include "Intern.hpp"
 
 int main()
 {
@@ -17,6 +18,13 @@ int main()
 	ShrubberyCreationForm shrubberyForm("home");
 	RobotomyRequestForm robotomyRequestForm("Pepa");
 	PresidentialPardonForm presidentialPardonForm("King Kong");
+
+	// Intern Test
+	Intern randomIntern;
+	// AForm* form1 = randomIntern.makeForm("shrubbery creation", "Gardener");
+	// AForm* form2 = randomIntern.makeForm("robotomy request", "Bender");
+	// AForm* form3 = randomIntern.makeForm("presidential pardon", "Fry");
+	// AForm* form4 = randomIntern.makeForm("unknown form", "Unknown");
 
 	// the whole signForm and executeForm inside is in try catch, so it is redundant to 
 	// do it here, just if anybody is wondering
@@ -43,6 +51,9 @@ int main()
 	highRank.signForm(presidentialPardonForm); // should succeed
 	lowRank.executeForm(presidentialPardonForm); // should fail
 	highRank.executeForm(presidentialPardonForm); // should succeed
+
+	// initial test, change later
+	randomIntern.makeForm("unknown form", "Unknown");
 
 	return 0;
 }
