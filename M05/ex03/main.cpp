@@ -19,13 +19,6 @@ int main()
 	RobotomyRequestForm robotomyRequestForm("Pepa");
 	PresidentialPardonForm presidentialPardonForm("King Kong");
 
-	// Intern Test
-	Intern randomIntern;
-	// AForm* form1 = randomIntern.makeForm("shrubbery creation", "Gardener");
-	// AForm* form2 = randomIntern.makeForm("robotomy request", "Bender");
-	// AForm* form3 = randomIntern.makeForm("presidential pardon", "Fry");
-	// AForm* form4 = randomIntern.makeForm("unknown form", "Unknown");
-
 	// the whole signForm and executeForm inside is in try catch, so it is redundant to 
 	// do it here, just if anybody is wondering
 	std::cout << "\n" << std::endl;
@@ -52,11 +45,40 @@ int main()
 	lowRank.executeForm(presidentialPardonForm); // should fail
 	highRank.executeForm(presidentialPardonForm); // should succeed
 
-	// initial test, change later
-	randomIntern.makeForm("unknown form", "Unknown");
+	std::cout << "\n" << std::endl;
+	std::cout << "INTERN SECTION\n" << std::endl;
+	// initial test
 	Intern someRandomIntern;
 	AForm* rrf;
 	rrf = someRandomIntern.makeForm("robotomy request", "Bender");
+	if (rrf)
+	{
+		lowRank.signForm(*rrf);
+		highRank.signForm(*rrf);
+		lowRank.executeForm(*rrf);
+		highRank.executeForm(*rrf);
+		delete rrf; // Free
+	}
+	std::cout << "\n" << std::endl;
+	AForm* srf = someRandomIntern.makeForm("shrubbery creation", "Root");
+	if (srf)
+	{
+		lowRank.signForm(*srf);
+		highRank.signForm(*srf);
+		lowRank.executeForm(*srf);
+		highRank.executeForm(*srf);
+		delete srf; // Free
+	}
+	std::cout << "\n" << std::endl;
+	AForm* prf = someRandomIntern.makeForm("presidential pardon", "Frog");
+	if (prf)
+	{
+		lowRank.signForm(*prf);
+		highRank.signForm(*prf);
+		lowRank.executeForm(*prf);
+		highRank.executeForm(*prf);
+		delete prf; // Free
+	}
 
 	return 0;
 }

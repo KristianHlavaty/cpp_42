@@ -37,32 +37,42 @@ AForm* Intern::createShrubberyCreationForm(const std::string &target)
 	return new ShrubberyCreationForm(target);
 }
 
-AForm* Intern::createRobotomyRequestForm(const std::string &target) {
+AForm* Intern::createRobotomyRequestForm(const std::string &target)
+{
 	return new RobotomyRequestForm(target);
 }
 
-AForm* Intern::createPresidentialPardonForm(const std::string &target) {
+AForm* Intern::createPresidentialPardonForm(const std::string &target)
+{
 	return new PresidentialPardonForm(target);
 }
 
 AForm* Intern::makeForm(const std::string &formName, const std::string &target)
 {
-	typedef AForm* (*FormCreator)(const std::string &target);
-	std::map<std::string, FormCreator> formCreators;
-
-	formCreators.insert(std::make_pair("shrubbery creation", createShrubberyCreationForm));
-	formCreators.insert(std::make_pair("robotomy request", createRobotomyRequestForm));
-	formCreators.insert(std::make_pair("presidential pardon", createPresidentialPardonForm));
-
-	std::map<std::string, FormCreator>::iterator it = formCreators.find(formName);
-	if (it != formCreators.end())
+	// might not need to expose it in .hpp file, will keep it here for now
+	struct FormEntry
 	{
-		std::cout << "Intern creates " << formName << std::endl;
-		return it->second(target);
-	}
-	else
+		std::string name;
+		AForm* (*create)(const std::string &target);
+	};
+
+	FormEntry formEntries[] =
 	{
-		std::cerr << "Error: Form name \"" << formName << "\" does not exist." << std::endl;
-		return NULL;
+		{"shrubbery creation", createShrubberyCreationForm},
+		{"robotomy request", createRobotomyRequestForm},
+        {"presidential pardon", createPresidentialPardonForm},
+	};
+
+	// should work if I add new entries
+	for (size_t i = 0; i < sizeof(formEntries) / sizeof(FormEntry); ++i)
+	{
+		if (formEntries[i].name == formName)
+		{
+			std::cout << "Intern creates " << formName << std::endl;
+			return formEntries[i].create(target);
+		}
 	}
+
+	std::cerr << "Error: Form name \"" << formName << "\" does not exist." << std::endl;
+	return NULL;
 }
