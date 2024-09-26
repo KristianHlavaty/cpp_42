@@ -14,24 +14,32 @@
 class ScalarConverter
 {
 	private:
-		const std::string _literal;
-		ScalarConverter(); // default constructor
+		// _ before variable is used only if it is a private member of the class
+		// if it is a parameter passed to the function, no underscore
 
-	public:
-		ScalarConverter(const std::string &literal); // constructor
+		
+		// don't need to maintain any internal state and only need to perform a task
+		// achieving non-instantiable state by just making constructor private
+		ScalarConverter(); // default constructor
 		ScalarConverter(const ScalarConverter &other); // copy constructor
 		ScalarConverter &operator=(const ScalarConverter &other); // copy assignment operator
-		virtual ~ScalarConverter();
+		~ScalarConverter(); // destructor
 
-		std::string getLiteral() const; // probably cant have this thanks to subject ? maybe
+		// converting
+		static void convertToChar(double value);
+		static void convertToInt(double value);
+		static void convertToFloat(double value);
+		static void convertToDouble(double value);
 
-		// Write a class ScalarConverter that will contain only one static method "convert
-		// only one?
+		// checking pseudo literals
+		// "You have to handle these pseudo literals as well (you know, for science): -inff, +inff
+		// and nanf."
+		static bool isPseudoLiteral(const std::string &lireal);
+	public:
 
-		virtual void convert(const std::string &literal) const = 0;
-
+		static void convert(const std::string &literal);
 		// excpetions
-		// TODO
+		// TODO more
 
 		class LiteralInWrongFormat : public std::exception
 		{
@@ -39,5 +47,8 @@ class ScalarConverter
 				const char *what() const throw();
 		};
 };
+
+// class can be made abstract by having at least one pure virtual method (= 0)
+// used when you want to enforce that derived classes must implement certain functionality
 
 #endif
