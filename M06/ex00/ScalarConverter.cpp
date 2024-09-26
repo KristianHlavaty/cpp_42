@@ -52,16 +52,16 @@ void ScalarConverter::convert(const std::string &literal)
 			else if (literal == "+inf" || literal == "+inff")
 			{
 				std::cout << "char: impossible" << std::endl; 
-                std::cout << "int: impossible" << std::endl;
-                std::cout << "float: +inff" << std::endl;
-                std::cout << "double: +inf" << std::endl;
+				std::cout << "int: impossible" << std::endl;
+				std::cout << "float: +inff" << std::endl;
+				std::cout << "double: +inf" << std::endl;
 			}
 			else if (literal == "-inf" || literal == "-inff")
 			{
 				std::cout << "char: impossible" << std::endl;
-                std::cout << "int: impossible" << std::endl;
-                std::cout << "float: -inff" << std::endl;
-                std::cout << "double: -inf" << std::endl;
+				std::cout << "int: impossible" << std::endl;
+				std::cout << "float: -inff" << std::endl;
+				std::cout << "double: -inf" << std::endl;
 			}
 			return;
 		}
@@ -75,8 +75,7 @@ void ScalarConverter::convert(const std::string &literal)
 		// also checking for 'f' in case of float literal
 		if (*end != '\0' && *end != 'f') 
 		{
-			// TODO better error
-			throw ScalarConverter::LiteralInWrongFormat();
+			throw ScalarConverter::LiteralInWrongFormat(literal, "Literal must end with '\\0' or 'f'.");
 		}
 
 		// convertions
@@ -95,7 +94,7 @@ void ScalarConverter::convert(const std::string &literal)
 // conversion functions for each data type
 void ScalarConverter::convertToChar(double value)
 {
-	// checking limits
+	// checking limits     const char *what() const throw();
 	if (value < std::numeric_limits<char>::min() || value > std::numeric_limits<char>::max() || std::isnan(value))
 	{
 		std::cout << "char: impossible" << std::endl;
@@ -153,12 +152,12 @@ void ScalarConverter::convertToDouble(double value)
 bool ScalarConverter::isPseudoLiteral(const std::string &literal)
 {
 	return (literal == "nan" || literal == "nanf" || literal == "+inf" || literal == "-inf" ||
-            literal == "+inff" || literal == "-inff");
+			literal == "+inff" || literal == "-inff");
 }
 
 // Exceptions
-// TODO maybe provide right format
 const char *ScalarConverter::LiteralInWrongFormat::what() const throw()
 {
-	return "Literal is in wrong format";
+	// returning it as a c style string
+	return _fullMessage.c_str();
 }

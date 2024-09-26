@@ -38,13 +38,28 @@ class ScalarConverter
 	public:
 
 		static void convert(const std::string &literal);
-		// excpetions
-		// TODO more
-
+		
+		
+		// exceptions
 		class LiteralInWrongFormat : public std::exception
 		{
+			// for more explicit error message
+			private:
+				std::string _literal;
+				std::string _message;
+				std::string _fullMessage; 
+				// The variable message is created on the stack and 
+				// will be destroyed when the function exits, so returning
+				// its c_str() results in undefined behavior (a dangling pointer)
+				// thats why I need fullMessage here
 			public:
-				const char *what() const throw();
+				LiteralInWrongFormat(const std::string &literal, const std::string &message) : _literal(literal), _message(message)
+				{
+					_fullMessage = "Literal is in wrong format: " + _literal + ". " + _message;
+				}
+				virtual ~LiteralInWrongFormat() throw() {}	// Marking destructor as a throw(), because of 
+															// "virtual ~exception() _GLIBCXX_TXN_SAFE_DYN _GLIBCXX_NOTHROW;" 
+				virtual const char *what() const throw();
 		};
 };
 
