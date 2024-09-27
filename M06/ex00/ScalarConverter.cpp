@@ -12,13 +12,13 @@ ScalarConverter::ScalarConverter()
 
 ScalarConverter::ScalarConverter(const ScalarConverter &other)
 {
-	// supressing warning
+	// suppressing warning
 	(void)other;
 }
 
 ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other)
 {
-	// supressing warning
+	// suppressing warning
 	(void)other;
 	return *this;
 }
