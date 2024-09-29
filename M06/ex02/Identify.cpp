@@ -47,22 +47,7 @@ void identify(Base &p)
 		}
 		catch(std::exception &e) 
 		{
-			std::cout << "e.what(): " << e.what() << std::endl;
-		}
-	}
-	
-	if (!identified)
-	{
-		try
-		{
-			B& b = dynamic_cast<B&>(p);
-			std::cout << "B" << std::endl;
-			std::cout << &b << std::endl;
-			identified = true;
-		}
-		catch(std::exception &e) 
-		{
-			std::cout << "e.what(): " << e.what() << std::endl;
+			// std::cout << "e.what(): " << e.what() << std::endl;
 		}
 	}
 
@@ -77,7 +62,22 @@ void identify(Base &p)
 		}
 		catch(std::exception &e)
 		{
-			std::cout << "e.what(): " << e.what() << std::endl;
+			// std::cout << "e.what(): " << e.what() << std::endl;
+		}
+	}
+
+	if (!identified)
+	{
+		try
+		{
+			B& b = dynamic_cast<B&>(p);
+			std::cout << "B" << std::endl;
+			(void)b;
+			identified = true;
+		}
+		catch(std::exception &e) 
+		{
+			// std::cout << "e.what(): " << e.what() << std::endl;
 		}
 	}
 
