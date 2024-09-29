@@ -34,42 +34,55 @@ void identify(Base *p)
 
 void identify(Base &p)
 {
-	try
-	{
-		B& b = dynamic_cast<B&>(p);
-		std::cout << "B" << std::endl;
-		std::cout << &b << std::endl;
-		return;
-	}
-	catch(std::exception &e) 
-	{
-		std::cout << "e.what(): " << e.what() << std::endl;
-	}
-	try
-	{
-		C& c = dynamic_cast<C&>(p);
-		std::cout << "C" << std::endl;
-		(void)c;
-		return;
-	}
-	catch(std::exception &e)
-	{
-		std::cout << "e.what(): " << e.what() << std::endl;
-	}
-	try
-	{
-		A& a = dynamic_cast<A&>(p);
-		std::cout << "A" << std::endl;
-		(void)a;
-		return;
-	}
-	catch(std::exception &e) 
-	{
-		std::cout << "e.what(): " << e.what() << std::endl;
-	}
+	bool identified = false;
 
-
+	if (!identified)
+	{
+		try
+		{
+			A& a = dynamic_cast<A&>(p);
+			std::cout << "A" << std::endl;
+			(void)a;
+			identified = true;
+		}
+		catch(std::exception &e) 
+		{
+			std::cout << "e.what(): " << e.what() << std::endl;
+		}
+	}
 	
+	if (!identified)
+	{
+		try
+		{
+			B& b = dynamic_cast<B&>(p);
+			std::cout << "B" << std::endl;
+			std::cout << &b << std::endl;
+			identified = true;
+		}
+		catch(std::exception &e) 
+		{
+			std::cout << "e.what(): " << e.what() << std::endl;
+		}
+	}
 
-	std::cout << "Unknown type" << std::endl;
+	if (!identified)
+	{
+		try
+		{
+			C& c = dynamic_cast<C&>(p);
+			std::cout << "C" << std::endl;
+			(void)c;
+			identified = true;
+		}
+		catch(std::exception &e)
+		{
+			std::cout << "e.what(): " << e.what() << std::endl;
+		}
+	}
+
+	if (!identified)
+	{
+		std::cout << "Unknown type" << std::endl;
+	}
 }
