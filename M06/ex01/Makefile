@@ -4,7 +4,7 @@ RM = rm -f
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # Files
-NAME = TODO
+NAME = Serializer
 SRCS = $(wildcard *.cpp)
 DEPS = $(wildcard *.hpp)
 OBJS = $(SRCS:.cpp=.o)
