@@ -37,6 +37,8 @@ void RobotomyRequestForm::execute(Bureaucrat const &executor) const
 {
 	beExecutable(executor, *this);
 	std::cout << "some drilling noises" << std::endl;
+	// should have used srand(static_cast<unsigned int>(time(0))); 
+	// there is a potential type mismatch between time_t and unsigned int
 	srand(time(0));
 	int randomNumber = rand();
 	if (randomNumber % 2 == 0)
