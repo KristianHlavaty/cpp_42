@@ -47,7 +47,6 @@ void identify(Base &p)
 		}
 		catch(std::exception &e) 
 		{
-			// std::cout << "e.what(): " << e.what() << std::endl;
 		}
 	}
 
@@ -62,10 +61,9 @@ void identify(Base &p)
 		}
 		catch(std::exception &e) 
 		{
-			// std::cout << "e.what(): " << e.what() << std::endl;
 		}
 	}
-	
+
 	if (!identified)
 	{
 		try
@@ -77,10 +75,9 @@ void identify(Base &p)
 		}
 		catch(std::exception &e)
 		{
-			// std::cout << "e.what(): " << e.what() << std::endl;
 		}
 	}
-
+	
 	if (!identified)
 	{
 		std::cout << "Unknown type" << std::endl;
