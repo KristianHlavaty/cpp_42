@@ -9,19 +9,19 @@ int main()
 		Data data;
 		data.value = 42;
 
-		// Data *wrong = NULL; // UNCOMMENT FOR EVAL TO TEST ERROR
+		Data *wrong = NULL; // UNCOMMENT FOR EVAL TO TEST ERROR
 
 		// uintptr_t
 		// is an unsigned integer type such that any valid (void *) value can be converted
 		// to this type and then converted back.  It is capable of storing values in  the  range  [0,
 		// INTPTR_MAX].
-		// uintptr_t wrongRaw = Serializer::serialize(wrong); // UNCOMMENT FOR EVAL TO TEST ERROR
+		uintptr_t wrongRaw = Serializer::serialize(wrong); // UNCOMMENT FOR EVAL TO TEST ERROR
 		uintptr_t raw = Serializer::serialize(&data);
 
 
 		Data* deserializedData = Serializer::deserialize(raw);
-		// Data* deserializedDataWrong = Serializer::deserialize(wrongRaw); // UNCOMMENT FOR EVAL TO TEST ERROR
-		// (void)deserializedDataWrong; // UNCOMMENT FOR EVAL TO TEST ERROR
+		Data* deserializedDataWrong = Serializer::deserialize(wrongRaw); // UNCOMMENT FOR EVAL TO TEST ERROR
+		(void)deserializedDataWrong; // UNCOMMENT FOR EVAL TO TEST ERROR
 
 		std::cout << "Original Data pointer: " << &data << std::endl;
 		std::cout << "Deserialized Data pointer: " << deserializedData << std::endl;

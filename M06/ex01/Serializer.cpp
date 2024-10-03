@@ -24,10 +24,10 @@ Serializer::~Serializer()
 
 uintptr_t Serializer::serialize(Data* ptr)
 {
-	if (ptr == NULL)
-	{
-		throw SerializationError("Cannot serialize a null pointer.");
-	}
+	// if (ptr == NULL)
+	// {
+	// 	throw SerializationError("Cannot serialize a null pointer.");
+	// }
 	return reinterpret_cast<uintptr_t>(ptr);
 }
 
@@ -35,10 +35,10 @@ Data* Serializer::deserialize(uintptr_t raw)
 {
 	Data* ptr = reinterpret_cast<Data*>(raw);
 	// making sure that deserialized data is valid
-	if (ptr == NULL)
-	{
-		throw SerializationError("Deserialized pointer is null.");
-	}
+	// if (ptr == NULL)
+	// {
+	// 	throw SerializationError("Deserialized pointer is null.");
+	// }
 	return ptr;
 }
 
