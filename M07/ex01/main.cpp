@@ -22,25 +22,30 @@ int main()
 	int intArr[] = {1, 2, 3, 4, 5, 6};
 	double doubleArr[] = {1.1, 2.2, 3.3, 4.4, 5.5, 6.6};
 
+	// get the number of elements in the array
+	size_t intArrLen = sizeof(intArr) / sizeof(intArr[0]);
+	size_t doubleArrLen = sizeof(doubleArr) / sizeof(doubleArr[0]);
 
 	// maybe use something like size of array for len
 	std::cout << "Int array: ";
-	iter(intArr, 6, printInt);
+	iter(intArr, intArrLen, printInt);
 	std::cout << std::endl;
 
 	std::cout << "Double array: ";
-	iter(doubleArr, 6, printDouble);
+	iter(doubleArr, doubleArrLen, printDouble);
+	std::cout << std::endl;
+
+
+
+	std::cout << "Int array with template function: ";
+	iter(intArr, intArrLen, printElement<int>);
+	std::cout << std::endl;
+
+	std::cout << "Double array with template function: ";
+	iter(doubleArr, doubleArrLen, printElement<double>);
 	std::cout << std::endl;
 
 	std::cout << "Int array with template function and negative len: ";
 	iter(intArr, -1, printElement<int>);
-	std::cout << std::endl;
-
-	std::cout << "Int array with template function: ";
-	iter(intArr, 6, printElement<int>);
-	std::cout << std::endl;
-
-	std::cout << "Double array with template function: ";
-	iter(doubleArr, 6, printElement<double>);
 	std::cout << std::endl;
 }
