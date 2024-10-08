@@ -4,8 +4,10 @@
 #include <cstddef>
 #include <iostream>
 
-template <typename T>
-void iter(T *arr, int len, void(*f)(T const &))
+// need the second typename for
+// " The third parameter can be an instantiated function template"
+template <typename T, typename F>
+void iter(T *arr, int len, F f)
 {
 	if (len < 0)
 	{
