@@ -3,7 +3,9 @@
     {
       "name": "linux-gcc-x64",
       "includePath": [
-        "${workspaceFolder}/**"
+        "${workspaceFolder}/**",
+		"${workspaceFolder}/.vscode",
+        "${workspaceFolder}/ex02"
       ],
       "compilerPath": "/usr/bin/gcc",
       "cStandard": "${default}",
