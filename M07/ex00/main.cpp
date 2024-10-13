@@ -9,6 +9,7 @@ int main( void )
 	std::cout << "a = " << a << ", b = " << b << std::endl;
 	std::cout << "min( a, b ) = " << ::min( a, b ) << std::endl;
 	std::cout << "max( a, b ) = " << ::max( a, b ) << std::endl;
+	// does lexicographical comparision
 	std::string c = "chaine1";
 	std::string d = "chaine2";
 	::swap(c, d);
