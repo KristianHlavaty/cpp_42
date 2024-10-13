@@ -7,10 +7,12 @@ void printElement(const T &x)
 	std::cout << x << " ";
 }
 
+
 int main()
 {
 	try
 	{
+		std::cout << "Basic tests: " << std::endl;
 		// testing default constructor
 		Array<int> emptyArray;
 		std::cout << "Empty array size: " << emptyArray.size() << std::endl;
@@ -58,8 +60,24 @@ int main()
 			printElement(copyArray[i]);
 		}
 		std::cout << std::endl;
+		std::cout << std::endl;
+
+		// TESTING COMPLEX TYPE
+		std::cout << "Testing a complex type: " << std::endl;
+		Array<std::string> strArray(3);
+		strArray[0] = "Dobrej";
+		strArray[1] = "cus";
+		strArray[2] = "ahoj";
+		std::cout << "String array elements: ";
+		for(unsigned int i = 0; i < strArray.size(); i++)
+		{
+			printElement(strArray[i]);
+		}
+		std::cout << std::endl;
+		std::cout << std::endl;
 
 		// testing out of bounds
+		std::cout << "Testing a throw if out of bounds: " << std::endl;
 		std::cout << "Attempting to access out of bounds index: ";
 		std::cout << intArray[10] <<std::endl; // should throw
 	}
