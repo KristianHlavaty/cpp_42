@@ -21,7 +21,7 @@ class Array
 		
 		// allowing retrieving or modifying array elements at a specific index
 		T &operator[](unsigned int index); // subscript operator
-		// same but not modifying elements because of const
+		// same but only retrieving elements because of const
 		const T &operator[](unsigned int index) const; // const subscript operator
 		
 		unsigned int size() const; // size function

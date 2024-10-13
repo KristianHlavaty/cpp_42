@@ -1,6 +1,17 @@
 #include <iostream>
 #include "Iter.hpp"
 
+// A functor is pretty much just a class which defines the operator(). That lets you create objects which "look like" a function
+class PrintWithBrackets
+{
+	public:
+	// overloading operator() so i can use it like a function
+		void operator()(int x) const
+		{
+			std::cout << "[" << x << "] ";
+		}
+};
+
 void printInt(const int &x)
 {
 	std::cout << x << " ";
@@ -47,5 +58,10 @@ int main()
 
 	std::cout << "Int array with template function and negative len: ";
 	iter(intArr, -1, printElement<int>);
+	std::cout << std::endl;
+
+	PrintWithBrackets printWithBrackets;
+	std::cout << "Int array with functor: ";
+	iter(intArr, intArrLen, printWithBrackets);
 	std::cout << std::endl;
 }

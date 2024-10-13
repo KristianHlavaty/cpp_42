@@ -6,6 +6,8 @@
 
 // need the second typename for
 // " The third parameter can be an instantiated function template"
+// T - type of the elements in arr
+// F - type of the callable object (that will be applied to each element in arr)
 template <typename T, typename F>
 void iter(T *arr, int len, F f)
 {
