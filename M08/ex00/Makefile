@@ -1,12 +1,12 @@
 # Compilation Flags
 CXX = c++
 RM = rm -f
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
 # Files
-NAME = Array
+NAME = tests
 SRCS = main.cpp
-DEPS =
+DEPS = easyfind.hpp
 OBJS = $(SRCS:.cpp=.o)
 
 # Compilation
