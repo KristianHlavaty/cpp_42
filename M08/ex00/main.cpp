@@ -11,7 +11,7 @@ int main()
 	// intArr + size 	-> pointer to one past the end
 	std::vector<int> intVector(intArr, intArr + size);
 	
-	//testing if the values are there
+	// testing if the values are there
 	std::cout << "should print 6 numbers" << std::endl;
 	for (std::vector<int>::iterator it = intVector.begin(); it != intVector.end(); ++it)
 	{
