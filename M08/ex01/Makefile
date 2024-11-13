@@ -4,7 +4,7 @@ RM = rm -f
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
 # Files
-NAME = easyfind
+NAME = span
 SRCS = main.cpp
 DEPS = easyfind.hpp
 OBJS = $(SRCS:.cpp=.o)
