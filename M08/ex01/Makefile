@@ -5,8 +5,8 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
 # Files
 NAME = span
-SRCS = main.cpp
-DEPS = easyfind.hpp
+SRCS = main.cpp Span.cpp
+DEPS = Span.hpp
 OBJS = $(SRCS:.cpp=.o)
 
 # Compilation
