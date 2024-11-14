@@ -25,15 +25,12 @@ class Span
 		{
 			public:
 				const char *what() const throw();
-				// return "no numbers, no span, what did you expect HMMMMM?"
 		};
 		class FullSpan : public std::exception
 		{
 			public:
 				const char *what() const throw();
-				//return "Span is full";
 		};
-		
 };
 
 #endif

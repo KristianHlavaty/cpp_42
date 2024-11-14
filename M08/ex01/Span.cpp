@@ -45,12 +45,12 @@ long Span::longestSpan()
 
 }
 
-const char *NoNumbers::what() const throw()
+const char *Span::NoNumbers::what() const throw()
 {
-	return "bla";
+	return "no numbers, no span, what did you expect HMMMMM?";
 }
 
-const char *FullSpan::what() const throw()
+const char *Span::FullSpan::what() const throw()
 {
-	return "bla";
+	return "Span is full";
 }
