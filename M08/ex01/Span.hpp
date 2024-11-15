@@ -3,6 +3,11 @@
 
 #include <iostream>
 #include <vector>
+#include <stdexcept>
+#include <algorithm>
+#include <climits>
+#include <cstdlib>
+#include <ctime>
 
 class Span
 {
@@ -21,15 +26,15 @@ class Span
 
 		void addALotOfNumbers(std::vector<int>::iterator begin, std::vector<int>::iterator end);
 		// exceptions
-		class NoNumbers : public std::exception
+		class NoNumbers : public std::runtime_error
 		{
 			public:
-				const char *what() const throw();
+				NoNumbers();
 		};
-		class FullSpan : public std::exception
+		class FullSpan : public std::runtime_error
 		{
 			public:
-				const char *what() const throw();
+				FullSpan();
 		};
 };
 

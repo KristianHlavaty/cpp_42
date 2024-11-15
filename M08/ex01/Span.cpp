@@ -49,8 +49,28 @@ void Span::addALotOfNumbers(std::vector<int>::iterator begin, std::vector<int>::
 
 long Span::shortestSpan()
 {
-	long a = 0;
-	return a;
+	if (_numbers.size() < 2)
+	{
+		throw NoNumbers();
+	}
+
+	// sorting allows me to make adjacent pairs have the closest values
+	std::vector<int> sortedNumbers = _numbers;
+	std::sort(sortedNumbers.begin(), sortedNumbers.end());
+
+	// i think that anything bigger than unsigned int would be always fine
+	// could initialize to UINT_MAX also
+	long shortestSpan = LONG_MAX; 
+
+	for (size_t i = 1; i < sortedNumbers.size(); ++i)
+	{
+		long span = sortedNumbers[i] - sortedNumbers[i - 1];
+		if(span < shortestSpan)
+		{
+			shortestSpan = span;
+		}
+	}
+	return (shortestSpan);
 }
 
 long Span::longestSpan()
@@ -60,12 +80,12 @@ long Span::longestSpan()
 }
 
 // exceptions
-const char *Span::NoNumbers::what() const throw()
+Span::NoNumbers::NoNumbers() : std::runtime_error("no numbers, no span, what did you expect HMMMMM?")
 {
-	return "no numbers, no span, what did you expect HMMMMM?";
+
 }
 
-const char *Span::FullSpan::what() const throw()
+Span::FullSpan::FullSpan() : std::runtime_error("Span is full")
 {
-	return "Span is full";
+
 }
