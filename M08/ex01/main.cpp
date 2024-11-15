@@ -33,6 +33,14 @@ int main()
 	{
 		std::cout << "Error: " << e.what() << std::endl;
 	}
+	try
+	{
+		copiedEmptySpan.longestSpan(); // should throw
+	}
+	catch (const std::exception &e)
+	{
+		std::cout << "Error: " << e.what() << std::endl;
+	}
 
 	// span
 	std::cout << "span section" << std::endl;
@@ -48,11 +56,70 @@ int main()
 	{
 		std::cout << "Error: " << e.what() << std::endl;
 	}
-	Span span(10);
-	int intArr[] = {-100, 2, 3, 3, 5, 6};
-	int size = sizeof(intArr) / sizeof(intArr[0]);
-	std::vector<int> intVector(intArr, intArr + size);
-	// ADD SHORT SPAN TESTS NOT JUST FOR BIG NUMBERS BUT BASIC ALSO
+	try
+	{
+		Span single(1);
+		single.addNumber(666);
+		std::cout << "Longest span: " << single.longestSpan() << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << "Error: " << e.what() << std::endl;
+	}
+	// some numbers
+	std::cout << std::endl;
+	Span spans(5);
+	spans.addNumber(10);
+	spans.addNumber(13);
+	spans.addNumber(300);
+	spans.addNumber(-100);
+	spans.addNumber(0);
+	std::cout << "just couple of numbers" << std::endl;
+	try
+	{
+		std::cout << "Shortest span: " << spans.shortestSpan() << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << "Error: " << e.what() << std::endl;
+	}
+	
+	try
+	{
+		std::cout << "Longest span: " << spans.longestSpan() << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << "Error: " << e.what() << std::endl;
+	}
+	Span spansDup(5);
+	spansDup.addNumber(10);
+	spansDup.addNumber(10);
+	spansDup.addNumber(300);
+	spansDup.addNumber(-100);
+	spansDup.addNumber(0);
+	std::cout << std::endl;
+	std::cout << "duplicates" << std::endl;
+	try
+	{
+		std::cout << "Shortest span: " << spans.shortestSpan() << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << "Error: " << e.what() << std::endl;
+	}
+	
+	try
+	{
+		std::cout << "Longest span: " << spans.longestSpan() << std::endl;
+	}
+	catch(const std::exception& e)
+	{
+		std::cout << "Error: " << e.what() << std::endl;
+	}
+
+	// duplicates
+	
 	// both with a lot of numbers
 	std::cout << std::endl;
 	std::cout << "a lot of numbers" << std::endl;
