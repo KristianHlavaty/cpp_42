@@ -32,6 +32,10 @@ Span &Span::operator=(const Span &other)
 
 void Span::addNumber(int number)
 {
+	if(_numbers.size() >= _n)
+	{
+		throw FullSpan();
+	}
 	_numbers.push_back(number);
 }
 
@@ -75,8 +79,21 @@ long Span::shortestSpan()
 
 long Span::longestSpan()
 {
-	long a = 0;
-	return a;
+	if (_numbers.size() < 2)
+	{
+		throw NoNumbers();
+	}
+
+	// sorting allows me to make adjacent pairs have the closest values
+	std::vector<int> sortedNumbers = _numbers;
+	std::sort(sortedNumbers.begin(), sortedNumbers.end());
+
+	// i think that anything bigger than unsigned int would be always fine
+	// could initialize to UINT_MAX also
+	long longestSpan = LONG_MAX;
+
+	longestSpan = sortedNumbers[sortedNumbers.size() - 1] - sortedNumbers[0];
+	return (longestSpan);
 }
 
 // exceptions
