@@ -53,5 +53,32 @@ int main()
 		std::cout << *it2 << std::endl;
 		++it2;
 	}
+	// some other tests
+	// copy constructor and assignment op.
+	std::cout << std::endl;
+	std::cout << "copy constructor" << std::endl;
+	MutantStack<int> copyStack(mstack);
+	std::cout << "Copy stack top: " << copyStack.top() << std::endl;
+	copyStack.pop();
+	std::cout << "After pop, original stack size: " << mstack.size() << ", copy stack size: " << copyStack.size() << std::endl;
+
+	std::cout << std::endl;
+	std::cout << "assignment operator" << std::endl;
+	MutantStack<int> assignStack;
+	assignStack = mstack;
+	std::cout << "Assing stack top: " << assignStack.top() << std::endl;
+	
+	std::cout << std::endl;
+	std::cout << "string" << std::endl;
+	MutantStack<std::string> stringStack;
+	stringStack.push("Deutsche");
+	stringStack.push("Bank");
+	MutantStack<std::string>::iterator strIt = stringStack.begin();
+	MutantStack<std::string>::iterator strIte = stringStack.end();
+	while (strIt != strIte)
+	{
+		std::cout << *strIt << std::endl;
+		++strIt;
+	}
 	return 0;
 }
