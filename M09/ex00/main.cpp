@@ -7,7 +7,7 @@
 
 int main(int ac, char **av)
 {
-	if(ac != 2)
+	if (ac != 2)
 	{
 		std::cerr << "Usage: ./btc <file>" << std::endl;
 		return 1;
@@ -19,30 +19,52 @@ int main(int ac, char **av)
 		btcExchange.loadDatabase("data.csv");
 
 		std::ifstream input(av[1]);
-		if(!input.is_open())
+		if (!input.is_open())
 		{
 			std::cerr << "Error: Could not open file: " << av[1] << std::endl;
 			return 1;
 		}
 
 		std::string line;
-		while(std::getline(input, line))
+		while (std::getline(input, line))
 		{
 			std::istringstream iss(line);
-			std::string date;
-			double value;
-			if(std::getline(iss, date, '|') && iss >> value)
+			std::string date, valueStr;
+
+			// Parse the date and value
+			if (std::getline(iss, date, '|') && std::getline(iss, valueStr))
 			{
-				try
+				// Trim whitespaces
+				date = btcExchange.trim(date);
+				valueStr = btcExchange.trim(valueStr);
+
+				// Validate the date format
+				if (!btcExchange.isValidDate(date))
 				{
-					double result = btcExchange.calculate(date, value);
-					std::cout << date << " => " << value << " = " << result << std::endl;
+					std::cerr << "Error: Bad input => " << line << std::endl;
+					continue; // Skip to the next line
 				}
-				catch(const std::exception &e)
+
+				// Validate and parse the value
+				std::istringstream valueStream(valueStr);
+				double value;
+
+				if (valueStream >> value && value >= 0.0 && value <= 1000.0)
 				{
-					std::cerr << e.what() << std::endl;
+					try
+					{
+						double result = btcExchange.calculate(date, value);
+						std::cout << date << " => " << value << " = " << result << std::endl;
+					}
+					catch (const std::exception &e)
+					{
+						std::cerr << e.what() << std::endl;
+					}
 				}
-				
+				else
+				{
+					std::cerr << "Error: Invalid value => " << valueStr << std::endl;
+				}
 			}
 			else
 			{
@@ -50,7 +72,7 @@ int main(int ac, char **av)
 			}
 		}
 	}
-	catch(const std::exception &e)
+	catch (const std::exception &e)
 	{
 		std::cerr << e.what() << std::endl;
 		return 1;
