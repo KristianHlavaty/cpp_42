@@ -31,21 +31,17 @@ int main(int ac, char **av)
 			std::istringstream iss(line);
 			std::string date, valueStr;
 
-			// Parse the date and value
 			if (std::getline(iss, date, '|') && std::getline(iss, valueStr))
 			{
-				// Trim whitespaces
 				date = btcExchange.trim(date);
 				valueStr = btcExchange.trim(valueStr);
 
-				// Validate the date format
 				if (!btcExchange.isValidDate(date))
 				{
 					std::cerr << "Error: Bad input => " << line << std::endl;
-					continue; // Skip to the next line
+					continue;
 				}
 
-				// Validate and parse the value
 				std::istringstream valueStream(valueStr);
 				double value;
 

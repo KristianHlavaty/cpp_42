@@ -76,23 +76,26 @@ bool BitcoinExchange::isValidDate(const std::string &date) const
 	int month = std::atoi(date.substr(5, 2).c_str());
 	int day = std::atoi(date.substr(8, 2).c_str());
 
-	if (month < 1 || month > 12 || day < 1 || day > 31)
+	int daysInMonth[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	
+	if (month < 1 || month > 12)
 		return false;
 
-	if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
+	// every 4 year -> leap year
+	// every 100 years -> not a leap year
+	// every 400 years -> leap year again
+	if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)))
 		return false;
-	if(month == 2)
+	if(day < 1 || day > daysInMonth[month])
 	{
-		bool isLeap = ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0));
-		if(day > 29 || (!isLeap && day > 28))
-			return false;
+		return false;
 	}
 	return true; 
 }
 
 bool BitcoinExchange::isValidValue(double value) const
 {
-	return value >= 0.0 && value <= 150000.0;
+	return value >= 0.0 && value <= 1000.0;
 }
 
 std::string BitcoinExchange::findClosestDate(const std::string &date) const
