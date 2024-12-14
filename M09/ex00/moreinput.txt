@@ -1,0 +1,55 @@
+date | value
+2011-01-03 | 3
+2011-01-03 | 2
+2011-01-03 | 1
+2011-01-03 | 1.2
+2011-01-09 | 1
+2012-01-11 | -1
+2001-42-42
+2012-01-11 | 1
+2012-01-11 | 2147483648
+
+2010-02-28 | 999.99
+2010-02-28 | 0.01
+2012-02-29 | 500    # Leap year check
+2020-12-31 | 1000.0
+2019-07-04 | 123.45
+2021-06-15 | 999
+2011-04-30 | 250.75
+2009-03-15 | 50
+2023-01-01 | 0
+2018-11-11 | 875.25
+
+2011-13-03 | 10         # Invalid month
+2011-00-10 | 10         # Month zero
+2011-02-30 | 10         # February 30th
+2011-04-31 | 10         # April 31st (only 30 days)
+2011-02-29 | 10         # Not a leap year
+abcd-ef-gh | 10         # Non-numeric date
+2011-01-3  | 10         # Missing leading zero
+2011/01/03 | 10         # Wrong delimiter
+2011-01-03-01 | 10      # Extra data in the date
+20110103    | 10         # No delimiters
+
+2011-01-03 | -0.1          # Slightly negative value
+2011-01-03 | -1000         # Negative large number
+2011-01-03 | 1000.01       # Value slightly above 1000
+2011-01-03 | 2147483648    # Large number (overflow check)
+2011-01-03 | not_a_number  # Non-numeric value
+2011-01-03 | 1.2.3         # Invalid float
+2011-01-03 |               # Missing value
+2011-01-03 | 0             # Value at the lower boundary
+
+2010-02-28 | 500
+abcd-ef-gh | 10
+2011-13-03 | 10
+2012-02-29 | 0.5
+2011-01-03 | 1001
+2011-01-03 | 999
+2011-02-29 | 1
+2011-04-31 | 250
+2011-00-10 | 5
+2011-01-03 | -5
+2011-01-03 | not_a_number
+2012-01-01 | 123.456
+

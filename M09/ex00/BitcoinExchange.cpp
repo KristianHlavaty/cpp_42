@@ -8,7 +8,7 @@ BitcoinExchange::BitcoinExchange()
 {
 
 }
-// testing ssh key 22
+
 BitcoinExchange::~BitcoinExchange()
 {
 
@@ -34,13 +34,10 @@ void BitcoinExchange::loadDatabase(const std::string &filename)
 	if(!fin.is_open())
 		throw std::runtime_error("Error: Could not open file.");
 
+	skipHeaderLine(fin);
+
 	std::string line, date;
 	double price;
-
-	if (std::getline(fin,line) && line == "date,exchange_rate")
-	{
-		// doing nothing, just skiping the header line
-	}
 
 	while(std::getline(fin, line))
 	{
@@ -72,25 +69,19 @@ bool BitcoinExchange::isValidDate(const std::string &date) const
 		}
 	}
 
-	int year = std::atoi(date.substr(0, 4).c_str());
-	int month = std::atoi(date.substr(5, 2).c_str());
-	int day = std::atoi(date.substr(8, 2).c_str());
+	int year, month, day;
+	parseDate(date, year, month, day);
 
 	int daysInMonth[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	
 	if (month < 1 || month > 12)
 		return false;
 
-	// every 4 year -> leap year
-	// every 100 years -> not a leap year
-	// every 400 years -> leap year again
-	if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)))
-		return false;
-	if(day < 1 || day > daysInMonth[month])
-	{
-		return false;
-	}
-	return true; 
+	int maxDays = daysInMonth[month];
+	if (month == 2 && isLeapYear(year))
+		maxDays = 29;
+
+	return day >= 1 && day <= maxDays; 
 }
 
 bool BitcoinExchange::isValidValue(double value) const
@@ -142,4 +133,28 @@ std::string BitcoinExchange::trim(const std::string &str) const
 		--end;
 
 	return str.substr(start, end - start);
+}
+
+void BitcoinExchange::skipHeaderLine(std::ifstream &fin) const
+{
+	std::string header;
+	if(std::getline(fin, header) && header == "date,exchange_rate")
+	{
+		// doing nothing, just skiping the header line
+	}
+}
+
+bool BitcoinExchange::isLeapYear(int year) const
+{
+	// every 4 year -> leap year
+	// every 100 years -> not a leap year
+	// every 400 years -> leap year again
+	return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+void BitcoinExchange::parseDate(const std::string &date, int &year, int &month, int &day) const
+{
+	year = std::atoi(date.substr(0, 4).c_str());
+	month = std::atoi(date.substr(5, 2).c_str());
+	day = std::atoi(date.substr(8, 2).c_str());
 }
