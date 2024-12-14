@@ -8,7 +8,7 @@ BitcoinExchange::BitcoinExchange()
 {
 
 }
-
+// testing ssh key
 BitcoinExchange::~BitcoinExchange()
 {
 
