@@ -22,8 +22,6 @@ class BitcoinExchange
 		std::string findClosestDate(const std::string &data) const;
 		void loadDatabase(const std::string &filename);
 		double calculate(const std::string &date, double value) const;
-
-		// trying to make it more readable
 		void skipHeaderLine(std::ifstream &fin) const;
 		bool isLeapYear(int year) const;
 		void parseDate(const std::string &date, int &year, int &month, int &day) const;
