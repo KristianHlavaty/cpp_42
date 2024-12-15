@@ -52,7 +52,6 @@ void BitcoinExchange::loadDatabase(const std::string &filename)
 			std::cerr << "Error: MAlformed line in database: " << line << std::endl;
 		}
 	}
-	fin.close();
 }
 
 bool BitcoinExchange::parseDatabaseLine(const std::string &line, std::string &date, double &price) const
