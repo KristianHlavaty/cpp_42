@@ -30,15 +30,15 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
 
 void BitcoinExchange::loadDatabase(const std::string &filename)
 {
-	std::ifstream fin(filename.c_str());
-	if(!fin.is_open())
+	std::ifstream fileinput(filename.c_str());
+	if(!fileinput.is_open())
 		throw std::runtime_error("Error: Could not open file.");
 
-	skipHeaderLine(fin);
+	skipHeaderLine(fileinput);
 
 	std::string line;
 
-	while(std::getline(fin, line))
+	while(std::getline(fileinput, line))
 	{
 		std::string date;
 		double price;
@@ -102,7 +102,12 @@ void BitcoinExchange::parseDate(const std::string &date, int &year, int &month, 
 
 bool BitcoinExchange::isValidValue(double value) const
 {
-	return value >= 0.0 && value <= 1000.0;
+	if(value < 0.0)
+		return false;
+	else if (value > 1000.0)
+		return false;
+	else
+		return true;
 }
 
 std::string BitcoinExchange::findClosestDate(const std::string &date) const
@@ -151,10 +156,10 @@ std::string BitcoinExchange::trim(const std::string &str) const
 	return str.substr(start, end - start);
 }
 
-void BitcoinExchange::skipHeaderLine(std::ifstream &fin) const
+void BitcoinExchange::skipHeaderLine(std::ifstream &fileinput) const
 {
 	std::string header;
-	if(std::getline(fin, header) && header == "date,exchange_rate")
+	if(std::getline(fileinput, header) && header == "date,exchange_rate")
 	{
 		// doing nothing, just skiping the header line
 	}
