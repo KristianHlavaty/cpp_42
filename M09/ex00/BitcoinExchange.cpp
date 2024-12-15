@@ -112,6 +112,11 @@ bool BitcoinExchange::isValidValue(double value) const
 
 std::string BitcoinExchange::findClosestDate(const std::string &date) const
 {
+	// from subject: Be careful to use the
+	// lower date and not the upper one.
+	
+	// lower_bound returns an iterator pointing to the first element
+	// in the map whose key is not less than the given date
 	std::map<std::string, double>::const_iterator it = database.lower_bound(date);
 
 	if (it == database.end() || it->first > date)
