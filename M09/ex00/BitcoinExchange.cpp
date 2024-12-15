@@ -36,13 +36,14 @@ void BitcoinExchange::loadDatabase(const std::string &filename)
 
 	skipHeaderLine(fin);
 
-	std::string line, date;
-	double price;
+	std::string line;
 
 	while(std::getline(fin, line))
 	{
-		std::stringstream ss(line);
-		if (std::getline(ss, date, ',') && ss >> price)
+		std::string date;
+		double price;
+
+		if (parseDatabaseLine(line, date, price))
 		{
 			database[date] = price;
 		}
@@ -54,11 +55,20 @@ void BitcoinExchange::loadDatabase(const std::string &filename)
 	fin.close();
 }
 
+bool BitcoinExchange::parseDatabaseLine(const std::string &line, std::string &date, double &price) const
+{
+	std::stringstream ss(line);
+	if(std::getline(ss, date, ',') && ss >> price)
+		return true;
+	return false;
+}
+
 bool BitcoinExchange::isValidDate(const std::string &date) const
 {
+	// format should be like this YYYY-MM-DD
 	if(date.length() != 10)
 		return false;
-
+	
 	for(size_t i = 0; i < date.length(); ++i)
 	{
 		if((i == 4 || i == 7) && date[i] != '-')
@@ -82,6 +92,13 @@ bool BitcoinExchange::isValidDate(const std::string &date) const
 		maxDays = 29;
 
 	return day >= 1 && day <= maxDays; 
+}
+
+void BitcoinExchange::parseDate(const std::string &date, int &year, int &month, int &day) const
+{
+	year = std::atoi(date.substr(0, 4).c_str());
+	month = std::atoi(date.substr(5, 2).c_str());
+	day = std::atoi(date.substr(8, 2).c_str());
 }
 
 bool BitcoinExchange::isValidValue(double value) const
@@ -150,11 +167,4 @@ bool BitcoinExchange::isLeapYear(int year) const
 	// every 100 years -> not a leap year
 	// every 400 years -> leap year again
 	return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-}
-
-void BitcoinExchange::parseDate(const std::string &date, int &year, int &month, int &day) const
-{
-	year = std::atoi(date.substr(0, 4).c_str());
-	month = std::atoi(date.substr(5, 2).c_str());
-	day = std::atoi(date.substr(8, 2).c_str());
 }

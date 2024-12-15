@@ -27,6 +27,7 @@ class BitcoinExchange
 		void skipHeaderLine(std::ifstream &fin) const;
 		bool isLeapYear(int year) const;
 		void parseDate(const std::string &date, int &year, int &month, int &day) const;
+		bool parseDatabaseLine(const std::string &line, std::string &date, double &price) const;
 
 };
 #endif
