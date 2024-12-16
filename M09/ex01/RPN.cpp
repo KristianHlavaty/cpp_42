@@ -35,6 +35,7 @@ bool RPN::isValidInput(const std::string &input)
 {
 	std::istringstream iss(input);
 	std::string renameme;
+	std::stack<int> tempStack;
 
 	while(iss >> renameme)
 	{
@@ -43,19 +44,19 @@ bool RPN::isValidInput(const std::string &input)
 			int number;
 			std::istringstream iss(renameme);
 			iss >> number;
-			stack.push(number);
+			tempStack.push(number);
 		}
 		else if(isOperator(renameme))
 		{
-			if(stack.size() < 2)
+			if(tempStack.size() < 2)
 			{
 				std::cerr << "Error: Not enough operands for operator '" << renameme << "'." << std::endl;
 			}
 			// poping two operands
-			stack.pop();
-			stack.pop();
+			tempStack.pop();
+			tempStack.pop();
 			// just a placeholder value as a result
-			stack.push(1);
+			tempStack.push(1);
 		}
 		else
 		{
@@ -63,7 +64,7 @@ bool RPN::isValidInput(const std::string &input)
 			return false;
 		}
 	}
-	if(stack.size() != 1)
+	if(tempStack.size() != 1)
 	{
 		std::cerr << "Error: Invalid RPN expression. Remaining stack size: " << stack.size() << "." << std::endl;
 	}
