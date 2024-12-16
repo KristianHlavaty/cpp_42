@@ -5,7 +5,7 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -g
 
 # Files
 NAME = RPN
-SRCS = main.cpp
+SRCS = main.cpp RPN.cpp
 DEPS = 
 OBJS = $(SRCS:.cpp=.o)
 

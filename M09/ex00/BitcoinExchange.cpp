@@ -110,6 +110,29 @@ bool BitcoinExchange::isValidValue(double value) const
 		return true;
 }
 
+bool BitcoinExchange::isValidInput(const std::string &date, double value) const
+{
+	if(!isValidDate(date))
+	{
+		std::cerr << "Error: Invalid date format." << std::endl;
+		return false;
+	}
+		
+	if(!isValidValue(value))
+	{
+		std::cerr << "Error: Invalid value." << std::endl;
+		return false;
+	}
+
+	if(database.empty())
+	{
+		std::cerr << "Error: Database is empty." << std::endl;
+		return false;
+	}
+
+	return true;
+}
+
 std::string BitcoinExchange::findClosestDate(const std::string &date) const
 {
 	// from subject: Be careful to use the
@@ -130,15 +153,9 @@ std::string BitcoinExchange::findClosestDate(const std::string &date) const
 
 double BitcoinExchange::calculate(const std::string &date, double value) const
 {
-	if(!isValidDate(date))
-		throw std::invalid_argument("Error: Invalid date format.");
+	if(!isValidInput(date, value))
+		throw std::invalid_argument("Error: Invalid input.");
 	
-	if(!isValidValue(value))
-		throw std::invalid_argument("Error: Invalid value.");
-
-	if(database.empty())
-		throw std::runtime_error("Error: Database is empty.");
-
 	std::string closestDate = findClosestDate(date);
 
 	std::map<std::string, double>::const_iterator it = database.find(closestDate);
