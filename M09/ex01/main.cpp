@@ -10,14 +10,16 @@ int main (int ac, char **av)
 	}
 
 	RPN rpn;
+	int result = 0;
 	std::string input = av[1];
-	if(rpn.isValidInput(input))
+	if(rpn.validateAndPerform(input, result))
 	{
-		std::cout << "valid RPN expression" <<std::endl;
+		std::cout << result <<std::endl;
 	}
 	else
 	{
 		std::cerr << "invalid RPN expression" << std::endl;
+		return 1;
 	}
 	
 }

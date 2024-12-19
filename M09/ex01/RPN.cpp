@@ -8,16 +8,12 @@ RPN::~RPN()
 {
 
 }
-RPN::RPN(const RPN &other)
+RPN::RPN(const RPN &)
 {
-	(void)other;
-}
-RPN &RPN::operator=(const RPN &other)
-{
-	if(this != &other)
-	{
 
-	}
+}
+RPN &RPN::operator=(const RPN &)
+{
 	return *this;
 }
 
@@ -31,7 +27,27 @@ bool RPN::isNumber(const std::string &number) const
 	return number.size() == 1 && std::isdigit(number[0]);
 }
 
-bool RPN::isValidInput(const std::string &input)
+int RPN::performOperation(const std::string &oprator, int a, int b) const
+{
+	if(oprator == "+")
+		return a + b;
+	if(oprator == "-")
+		return a - b;
+	if(oprator == "*")
+		return a * b;
+	if(oprator == "/")
+	{
+		if(b == 0)
+		{
+			throw std::runtime_error("Error: You tried dividing by zero.");
+		}
+		return a / b;
+	
+	}
+	throw std::runtime_error("Error: It seems likely that your operator kind of does not exist '" + oprator + "'.");
+}
+
+bool RPN::validateAndPerform(const std::string &input, int &result)
 {
 	std::istringstream iss(input);
 	std::string renameme;
@@ -41,9 +57,7 @@ bool RPN::isValidInput(const std::string &input)
 	{
 		if(isNumber(renameme))
 		{
-			int number;
-			std::istringstream iss(renameme);
-			iss >> number;
+			int number = std::atoi(renameme.c_str());
 			tempStack.push(number);
 		}
 		else if(isOperator(renameme))
@@ -51,12 +65,23 @@ bool RPN::isValidInput(const std::string &input)
 			if(tempStack.size() < 2)
 			{
 				std::cerr << "Error: Not enough operands for operator '" << renameme << "'." << std::endl;
+				return false;
 			}
 			// poping two operands
+			int b = tempStack.top();
 			tempStack.pop();
+			int a = tempStack.top();
 			tempStack.pop();
-			// just a placeholder value as a result
-			tempStack.push(1);
+			try 
+			{
+				int operationResult = performOperation(renameme, a, b);
+				tempStack.push(operationResult);
+			} 
+			catch (const std::exception &e)
+			{
+				std::cerr << e.what() << std::endl;
+				return false;
+			}
 		}
 		else
 		{
@@ -67,7 +92,8 @@ bool RPN::isValidInput(const std::string &input)
 	if(tempStack.size() != 1)
 	{
 		std::cerr << "Error: Invalid RPN expression. Remaining stack size: " << stack.size() << "." << std::endl;
+		return false;
 	}
-
+	result = tempStack.top();
 	return true;
 }
