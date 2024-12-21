@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <iostream>
 #include <ctime>
+#include <set>
 
 class PmergeMe
 {
@@ -51,8 +52,7 @@ void PmergeMe::recursivePairSort(Container& sequence, size_t step)
 	recursivePairSort(sequence, step * 2);
 }
 
-// b is smaller element
-// a is larger element
+// Splits "sequence" into "main" (larger) and "pend" (smaller)
 template <typename Container>
 void PmergeMe::pairAndSort(Container& sequence, Container& main, Container& pend)
 {
@@ -63,17 +63,20 @@ void PmergeMe::pairAndSort(Container& sequence, Container& main, Container& pend
 			// Swapping to ensure sequence[i] is "b" and sequence[i + 1] is "a"
 			std::swap(sequence[i], sequence[i + 1]);
 		}
+		// smaller element
 		main.push_back(sequence[i + 1]);
+		// larget element
 		pend.push_back(sequence[i]);
 	}
 	// unpaired element
 	if (sequence.size() % 2 != 0)
 		pend.push_back(sequence.back());
 
-	// sorting the larger elements recursively
+	// sorting the larger elements (main) recursively
 	recursivePairSort(main, 1);
 }
 
+// Inserts elements from "pend" into "main" using Jacobsthal order
 template <typename Container>
 void PmergeMe::insertPendElements(Container& main, Container& pend)
 {
