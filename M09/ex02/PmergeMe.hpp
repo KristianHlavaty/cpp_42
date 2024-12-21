@@ -74,6 +74,16 @@ void PmergeMe::pairAndSort(Container& sequence, Container& main, Container& pend
 
 	// sorting the larger elements (main) recursively
 	recursivePairSort(main, 1);
+
+	std::cout << "Main after pairAndSort: ";
+	for (size_t i = 0; i < main.size(); ++i)
+		std::cout << main[i] << " ";
+	std::cout << std::endl;
+
+	std::cout << "Pend after pairAndSort: ";
+	for (size_t i = 0; i < pend.size(); ++i)
+		std::cout << pend[i] << " ";
+	std::cout << std::endl;
 }
 
 // Inserts elements from "pend" into "main" using Jacobsthal order
@@ -81,25 +91,47 @@ template <typename Container>
 void PmergeMe::insertPendElements(Container& main, Container& pend)
 {
 	std::vector<int> jacobsthal = generateJacobsthalNumbers(pend.size());
-	size_t inserted = 0;
+	std::set<size_t> processedIndices;
 
-	for (size_t i = 0; i < jacobsthal.size() && inserted < pend.size(); ++i)
+	std::cout << "Pend before insertion: ";
+	for (size_t i = 0; i < pend.size(); ++i)
+		std::cout << pend[i] << " ";
+	std::cout << std::endl;
+	// Insert elements from pend into main based on Jacobsthal sequence
+	for (size_t i = 0; i < jacobsthal.size(); ++i)
 	{
-		size_t count = std::min<size_t>(jacobsthal[i] - (i > 0 ? jacobsthal[i - 1] : 0), pend.size() - inserted);
-		for (size_t j = 0; j < count; ++j)
+		size_t index = jacobsthal[i] - 1;
+		if (index < pend.size() && processedIndices.find(index) == processedIndices.end())
 		{
-			typename Container::iterator pos = std::lower_bound(main.begin(), main.end(), pend[inserted]);
-			main.insert(pos, pend[inserted]);
-			++inserted;
+			typename Container::iterator pos = main.begin();
+
+			// Manual binary search for insertion position
+			while (pos != main.end() && *pos < pend[index])
+				++pos;
+
+			main.insert(pos, pend[index]);
+			processedIndices.insert(index);
 		}
 	}
 
-	while (inserted < pend.size())
+	// Insert remaining elements from pend that were not covered by Jacobsthal
+	for (size_t i = 0; i < pend.size(); ++i)
 	{
-		typename Container::iterator pos = std::lower_bound(main.begin(), main.end(), pend[inserted]);
-		main.insert(pos, pend[inserted]);
-		++inserted;
+		if (processedIndices.find(i) == processedIndices.end())
+		{
+			typename Container::iterator pos = main.begin();
+
+			// Manual binary search for insertion position
+			while (pos != main.end() && *pos < pend[i])
+				++pos;
+
+			main.insert(pos, pend[i]);
+		}
 	}
+	std::cout << "Main after insertion: ";
+	for (typename Container::iterator it = main.begin(); it != main.end(); ++it)
+		std::cout << *it << " ";
+	std::cout << std::endl;
 }
 
 #endif
