@@ -13,13 +13,13 @@ class PmergeMe
 		std::vector<int> generateJacobsthalNumbers(size_t size);
 
 		template <typename Container>
-		void pairAndSort(Container &sequence, Container &aList, Container &bList);
+		void pairAndSort(Container &sequence, Container &main, Container &pend);
 
 		template <typename Container>
 		void recursivePairSort(Container &sequence, size_t step);
 
 		template <typename Container>
-		void insertbListElements(Container &aList, Container &bList);
+		void insertPendElements(Container &main, Container &pend);
 
 		
 
@@ -54,7 +54,7 @@ void PmergeMe::recursivePairSort(Container& sequence, size_t step)
 // b is smaller element
 // a is larger element
 template <typename Container>
-void PmergeMe::pairAndSort(Container& sequence, Container& aList, Container& bList)
+void PmergeMe::pairAndSort(Container& sequence, Container& main, Container& pend)
 {
 	for (size_t i = 0; i + 1 < sequence.size(); i += 2)
 	{
@@ -63,38 +63,38 @@ void PmergeMe::pairAndSort(Container& sequence, Container& aList, Container& bLi
 			// Swapping to ensure sequence[i] is "b" and sequence[i + 1] is "a"
 			std::swap(sequence[i], sequence[i + 1]);
 		}
-		aList.push_back(sequence[i + 1]);
-		bList.push_back(sequence[i]);
+		main.push_back(sequence[i + 1]);
+		pend.push_back(sequence[i]);
 	}
 	// unpaired element
 	if (sequence.size() % 2 != 0)
-		bList.push_back(sequence.back());
+		pend.push_back(sequence.back());
 
 	// sorting the larger elements recursively
-	recursivePairSort(aList, 1);
+	recursivePairSort(main, 1);
 }
 
 template <typename Container>
-void PmergeMe::insertbListElements(Container& aList, Container& bList)
+void PmergeMe::insertPendElements(Container& main, Container& pend)
 {
-	std::vector<int> jacobsthal = generateJacobsthalNumbers(bList.size());
+	std::vector<int> jacobsthal = generateJacobsthalNumbers(pend.size());
 	size_t inserted = 0;
 
-	for (size_t i = 0; i < jacobsthal.size() && inserted < bList.size(); ++i)
+	for (size_t i = 0; i < jacobsthal.size() && inserted < pend.size(); ++i)
 	{
-		size_t count = std::min<size_t>(jacobsthal[i] - (i > 0 ? jacobsthal[i - 1] : 0), bList.size() - inserted);
+		size_t count = std::min<size_t>(jacobsthal[i] - (i > 0 ? jacobsthal[i - 1] : 0), pend.size() - inserted);
 		for (size_t j = 0; j < count; ++j)
 		{
-			typename Container::iterator pos = std::lower_bound(aList.begin(), aList.end(), bList[inserted]);
-			aList.insert(pos, bList[inserted]);
+			typename Container::iterator pos = std::lower_bound(main.begin(), main.end(), pend[inserted]);
+			main.insert(pos, pend[inserted]);
 			++inserted;
 		}
 	}
 
-	while (inserted < bList.size())
+	while (inserted < pend.size())
 	{
-		typename Container::iterator pos = std::lower_bound(aList.begin(), aList.end(), bList[inserted]);
-		aList.insert(pos, bList[inserted]);
+		typename Container::iterator pos = std::lower_bound(main.begin(), main.end(), pend[inserted]);
+		main.insert(pos, pend[inserted]);
 		++inserted;
 	}
 }

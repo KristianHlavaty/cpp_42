@@ -46,7 +46,7 @@ void PmergeMe::fordJohnsonSortVector(std::vector<int>& sequence)
 {
 	std::vector<int> main, pend;
 	pairAndSort(sequence, main, pend);
-	insertbListElements(main, pend);
+	insertPendElements(main, pend);
 	sequence = main;
 }
 
@@ -54,7 +54,7 @@ void PmergeMe::fordJohnsonSortDeque(std::deque<int>& sequence)
 {
 	std::deque<int> main, pend;
 	pairAndSort(sequence, main, pend);
-	insertbListElements(main, pend);
+	insertPendElements(main, pend);
 	sequence = main;
 }
 
