@@ -67,7 +67,6 @@ bool RPN::validateAndPerform(const std::string &input, int &result)
 				std::cerr << "Error: Not enough operands for operator '" << renameme << "'." << std::endl;
 				return false;
 			}
-			// poping two operands
 			int b = tempStack.top();
 			tempStack.pop();
 			int a = tempStack.top();
@@ -89,9 +88,11 @@ bool RPN::validateAndPerform(const std::string &input, int &result)
 			return false;
 		}
 	}
+	// if the expression is valid, size should be just one
+	// because all thats left is a final result
 	if(tempStack.size() != 1)
 	{
-		std::cerr << "Error: Invalid RPN expression. Remaining stack size: " << stack.size() << "." << std::endl;
+		std::cerr << "Error: Invalid RPN expression. Remaining stack size: " << tempStack.size() << "." << std::endl;
 		return false;
 	}
 	result = tempStack.top();
