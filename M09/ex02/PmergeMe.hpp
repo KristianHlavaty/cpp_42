@@ -13,12 +13,17 @@ class PmergeMe
 	private:
 		std::vector<int> generateJacobsthalNumbers(size_t size);
 
+		// Pair up the input into "a" (larger) and "b" (smaller),
+		// placing the "a" elements into 'main' and "b" elements into 'pend'
 		template <typename Container>
 		void pairAndSort(Container &sequence, Container &main, Container &pend);
 
+		// Recursively sort 'main' by grouping pairs of pairs, etc.
 		template <typename Container>
 		void recursivePairSort(Container &sequence, size_t step);
 
+		// Insert 'pend' elements (the smaller ones) into the sorted 'main'
+		// according to the Jacobsthal sequence
 		template <typename Container>
 		void insertPendElements(Container &main, Container &pend);
 
@@ -35,6 +40,7 @@ class PmergeMe
 };
 
 // templates so i dont have to write it twice for deque
+// Recursively sorts "main" in place by grouping pairs of pairs, etc.
 template <typename Container>
 void PmergeMe::recursivePairSort(Container& sequence, size_t step)
 {
@@ -43,6 +49,7 @@ void PmergeMe::recursivePairSort(Container& sequence, size_t step)
 
 	for (size_t i = 0; i + 2 * step - 1 < sequence.size(); i += 2 * step)
 	{
+		// Compare the largest elements in each grouped pair range
 		if (sequence[i + step] > sequence[i + 2 * step - 1])
 		{
 			for (size_t j = 0; j < step; ++j)
@@ -60,19 +67,18 @@ void PmergeMe::pairAndSort(Container& sequence, Container& main, Container& pend
 	{
 		if (sequence[i] > sequence[i + 1])
 		{
-			// Swapping to ensure sequence[i] is "b" and sequence[i + 1] is "a"
 			std::swap(sequence[i], sequence[i + 1]);
 		}
-		// smaller element
+		//  larger element
 		main.push_back(sequence[i + 1]);
-		// larget element
+		// smaller element
 		pend.push_back(sequence[i]);
 	}
-	// unpaired element
+	// unpaired element, treat it as a 'b' (smaller)
 	if (sequence.size() % 2 != 0)
 		pend.push_back(sequence.back());
 
-	// sorting the larger elements (main) recursively
+	// recursively sort 'main'
 	recursivePairSort(main, 1);
 
 	std::cout << "Main after pairAndSort: ";
@@ -97,15 +103,15 @@ void PmergeMe::insertPendElements(Container& main, Container& pend)
 	for (size_t i = 0; i < pend.size(); ++i)
 		std::cout << pend[i] << " ";
 	std::cout << std::endl;
-	// Insert elements from pend into main based on Jacobsthal sequence
+
+	// Insert elements in order dictated by Jacobsthal numbers
 	for (size_t i = 0; i < jacobsthal.size(); ++i)
 	{
 		size_t index = jacobsthal[i] - 1;
 		if (index < pend.size() && processedIndices.find(index) == processedIndices.end())
 		{
+			// Find correct insertion spot in 'main' for pend[index]
 			typename Container::iterator pos = main.begin();
-
-			// Manual binary search for insertion position
 			while (pos != main.end() && *pos < pend[index])
 				++pos;
 
@@ -114,14 +120,12 @@ void PmergeMe::insertPendElements(Container& main, Container& pend)
 		}
 	}
 
-	// Insert remaining elements from pend that were not covered by Jacobsthal
+	//  Insert any remaining pend elements that Jacobsthal didn't cover
 	for (size_t i = 0; i < pend.size(); ++i)
 	{
 		if (processedIndices.find(i) == processedIndices.end())
 		{
 			typename Container::iterator pos = main.begin();
-
-			// Manual binary search for insertion position
 			while (pos != main.end() && *pos < pend[i])
 				++pos;
 
