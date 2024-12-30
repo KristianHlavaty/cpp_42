@@ -1,139 +1,199 @@
 #ifndef PMERGEME_HPP
 #define PMERGEME_HPP
 
+#include <iostream>
 #include <vector>
 #include <deque>
 #include <algorithm>
-#include <iostream>
+#include <list>
+#include <cmath>
 #include <ctime>
-#include <set>
+
+// Ford Johnson(Merge-Insertion) algo
+// 1) split the input into pairs
+// 2) sort each pair so the smaller element is first
+// 3) sort the pairs by their larger element (the second element)
+// 4) create a master list of the larger elements
+// 5) insert the smaller elements into this master list using a Jacobsthal-based sequence
+// 6) if there's an _leftoverValue leftover element, insert it last
 
 class PmergeMe
 {
 	private:
-		std::vector<int> generateJacobsthalNumbers(size_t size);
-
-		// Pair up the input into "a" (larger) and "b" (smaller),
-		// placing the "a" elements into 'main' and "b" elements into 'pend'
 		template <typename Container>
-		void pairAndSort(Container &sequence, Container &main, Container &pend);
+		void sortEachPair(Container &pairsCont);
 
-		// Recursively sort 'main' by grouping pairs of pairs, etc.
 		template <typename Container>
-		void recursivePairSort(Container &sequence, size_t step);
+		void binaryInsert(Container &sortedListCont, int value, int index);
 
-		// Insert 'pend' elements (the smaller ones) into the sorted 'main'
-		// according to the Jacobsthal sequence
 		template <typename Container>
-		void insertPendElements(Container &main, Container &pend);
+		void insertionSortBySecond(Container &pairsCont, int endIndex);
 
-		
+		template <typename ContainerOfPairs, typename ContainerOfInts>
+		void splitIntoPairs(ContainerOfPairs &pairsCont, ContainerOfInts &buff, int _pairCount);
+
+		template<typename PairsContainer, typename IntContainer>
+		void makeSortedList(PairsContainer &pairsCont, IntContainer &sortedList, bool _hasLeftover, int _leftoverValue);
+
+		std::vector< std::pair<int,int> > _pairsVector;
+		std::vector<int> _sortedListVector;
+
+		std::deque< std::pair<int,int> > _pairsDeque;
+		std::deque<int> _sortedListDeque;
+
+		bool _hasLeftover;
+		int _leftoverValue;
+		int _pairCount;
 
 	public:
 		PmergeMe();
 		~PmergeMe();
+		PmergeMe(const PmergeMe& other);
+		PmergeMe& operator=(const PmergeMe& other);
+		
+		void mergeInsertVector(int ac, char **av);
+		void mergeInsertDeque(int ac, char **av);
+		const std::vector<int> &getSortedVector() const;
+		const std::deque<int> &getSortedDeque()  const;
 
-		void fordJohnsonSortVector(std::vector<int> &sequence);
-		void fordJohnsonSortDeque(std::deque<int> &sequence);
-		void measureTimeAndSort(int ac, char **av);
-		static bool validateInput(char **input, int size);
+		bool isNumber(const char *str);
 };
 
-// templates so i dont have to write it twice for deque
-// Recursively sorts "main" in place by grouping pairs of pairs, etc.
+// for each (small, large) pair, ensuring the smaller is first and larger is second
 template <typename Container>
-void PmergeMe::recursivePairSort(Container& sequence, size_t step)
+void PmergeMe::sortEachPair(Container &pairsCont)
 {
-	if (sequence.size() < 2 * step)
+	for (typename Container::iterator it = pairsCont.begin();
+		it != pairsCont.end(); ++it)
+	{
+		if (it->first > it->second)
+			std::swap(it->first, it->second);
+	}
+}
+
+// inserting value into the sortedContainer
+template <typename Container>
+void PmergeMe::binaryInsert(Container &sortedListCont, int value, int index)
+{
+	if (index > static_cast<int>(sortedListCont.size()))
+		index = sortedListCont.size();
+
+	typename Container::iterator it
+		= std::lower_bound(sortedListCont.begin(), sortedListCont.begin() + index, value);
+
+	if (it == sortedListCont.end())
+		sortedListCont.push_back(value);
+	else
+		sortedListCont.insert(it, value);
+}
+
+// do insertion sort on the array of pairs
+// by comparing their second element (the larger)
+template <typename Container>
+void PmergeMe::insertionSortBySecond(Container &pairsCont, int endIndex)
+{
+	if (endIndex < 1)
 		return;
 
-	for (size_t i = 0; i + 2 * step - 1 < sequence.size(); i += 2 * step)
+	// sorting subrange up to endIndex-1
+	insertionSortBySecond(pairsCont, endIndex - 1);
+
+	// now inserting pairsCont[endIndex] into the sorted subrange [0..endIndex-1]
+	typename Container::value_type keyPair = pairsCont[endIndex];
+
+	int j = endIndex - 1;
+	// shifting bigger elements up
+	while (j >= 0 && pairsCont[j].second > keyPair.second)
 	{
-		// Compare the largest elements in each grouped pair range
-		if (sequence[i + step] > sequence[i + 2 * step - 1])
-		{
-			for (size_t j = 0; j < step; ++j)
-				std::swap(sequence[i + j], sequence[i + step + j]);
-		}
+		pairsCont[j + 1] = pairsCont[j];
+		j--;
 	}
-	recursivePairSort(sequence, step * 2);
+	pairsCont[j + 1] = keyPair;
 }
 
-// Splits "sequence" into "main" (larger) and "pend" (smaller)
-template <typename Container>
-void PmergeMe::pairAndSort(Container& sequence, Container& main, Container& pend)
+// dividing the list of numbers into (small, large) pairs
+// and pushing them into the pairsCont
+template <typename ContainerOfPairs, typename ContainerOfInts>
+void PmergeMe::splitIntoPairs(ContainerOfPairs &pairsCont, ContainerOfInts &buff, int _pairCount)
 {
-	for (size_t i = 0; i + 1 < sequence.size(); i += 2)
+	for (int i = 0; i < _pairCount; i += 2)
 	{
-		if (sequence[i] > sequence[i + 1])
-		{
-			std::swap(sequence[i], sequence[i + 1]);
-		}
-		//  larger element
-		main.push_back(sequence[i + 1]);
-		// smaller element
-		pend.push_back(sequence[i]);
+		typename ContainerOfPairs::value_type newPair;
+		newPair.first = buff[i];
+		newPair.second = buff[i + 1];
+		pairsCont.push_back(newPair);
 	}
-	// unpaired element, treat it as a 'b' (smaller)
-	if (sequence.size() % 2 != 0)
-		pend.push_back(sequence.back());
-
-	// recursively sort 'main'
-	recursivePairSort(main, 1);
-
-	std::cout << "Main after pairAndSort: ";
-	for (size_t i = 0; i < main.size(); ++i)
-		std::cout << main[i] << " ";
-	std::cout << std::endl;
-
-	std::cout << "Pend after pairAndSort: ";
-	for (size_t i = 0; i < pend.size(); ++i)
-		std::cout << pend[i] << " ";
-	std::cout << std::endl;
+	buff.clear();
 }
 
-// Inserts elements from "pend" into "main" using Jacobsthal order
-template <typename Container>
-void PmergeMe::insertPendElements(Container& main, Container& pend)
+// making an initial "sorted container" from the largest elements
+// keeping the smaller elements in a "pending" container
+// using Jacobsthal-based insertion to place the smaller elements back
+template<typename PairsContainer, typename IntContainer>
+void PmergeMe::makeSortedList(PairsContainer &pairsCont, IntContainer &sortedList, bool _hasLeftover, int _leftoverValue)
 {
-	std::vector<int> jacobsthal = generateJacobsthalNumbers(pend.size());
-	std::set<size_t> processedIndices;
-
-	std::cout << "Pend before insertion: ";
-	for (size_t i = 0; i < pend.size(); ++i)
-		std::cout << pend[i] << " ";
-	std::cout << std::endl;
-
-	// Insert elements in order dictated by Jacobsthal numbers
-	for (size_t i = 0; i < jacobsthal.size(); ++i)
+	// for smaller elements
+	IntContainer pend;
+	// moving all larger elements (second) to finalContainer
+    // and storing smaller elements (first) in pendingSmalls
+	for (size_t i = 0; i < pairsCont.size(); i++)
 	{
-		size_t index = jacobsthal[i] - 1;
-		if (index < pend.size() && processedIndices.find(index) == processedIndices.end())
-		{
-			// Find correct insertion spot in 'main' for pend[index]
-			typename Container::iterator pos = main.begin();
-			while (pos != main.end() && *pos < pend[index])
-				++pos;
-
-			main.insert(pos, pend[index]);
-			processedIndices.insert(index);
-		}
+		// pairsCont[i].second => a_i
+		sortedList.push_back(pairsCont[i].second); 
+		// pairsCont[i].first => b_i
+		pend.push_back(pairsCont[i].first);       
 	}
 
-	//  Insert any remaining pend elements that Jacobsthal didn't cover
-	for (size_t i = 0; i < pend.size(); ++i)
-	{
-		if (processedIndices.find(i) == processedIndices.end())
-		{
-			typename Container::iterator pos = main.begin();
-			while (pos != main.end() && *pos < pend[i])
-				++pos;
+	// inserting b1 (first small) at the front of sortedList
+	if (!pend.empty())
+		sortedList.insert(sortedList.begin(), pend[0]);
 
-			main.insert(pos, pend[i]);
+	// using a Jacobsthal-based sequence to insert the rest
+	size_t i = 0;
+	size_t jacobs_index = 1;
+	while (true)
+	{
+		int distanceForward = (std::pow(2, jacobs_index + 1) + std::pow(-1, jacobs_index)) / 3;
+		if (i + distanceForward >= pend.size())
+		{
+			break;
 		}
+		size_t start = i;
+		i += distanceForward;
+
+		//  inserting from the back of the newly advanced range
+		while (i > start)
+		{
+			// inserting pend[i] into sortedList using the index of the larger pair's second
+			// as a guiding "limit" for binary searching
+			binaryInsert(sortedList, pend[i], pairsCont[i].second);
+			--i;
+		}
+		i += distanceForward;
+		++jacobs_index;
 	}
-	std::cout << "Main after insertion: ";
-	for (typename Container::iterator it = main.begin(); it != main.end(); ++it)
+
+	// inserting any remaining smaller elements from the end
+	size_t start = i;
+	i = pend.size() - 1;
+	while (i > start)
+	{
+		binaryInsert(sortedList, pend[i], pairsCont[i].second);
+		--i;
+	}
+
+	// if there was a leftover element inserting it last
+	if (_hasLeftover)
+	{
+		binaryInsert(sortedList, _leftoverValue, static_cast<int>(sortedList.size()));
+	}
+}
+
+template<typename Container>
+void printContainer(const Container &vec, const std::string message)
+{
+	std::cout << message;
+	for (typename Container::const_iterator it = vec.begin(); it != vec.end(); it++)
 		std::cout << *it << " ";
 	std::cout << std::endl;
 }
